@@ -1,0 +1,3801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FJA Polyatomic Ion Mastery</title>
+  <style>
+    /* ==========================================================================
+       DESIGN TOKENS & RESET
+       Clean, high-contrast academic theme optimized for mobile, desktop, & iframes
+       ========================================================================== */
+    :root {
+      --bg-page: #f1f5f9;
+      --bg-card: #ffffff;
+      --bg-subtle: #f8fafc;
+      --bg-muted: #e2e8f0;
+
+      --text-primary: #0f172a;
+      --text-secondary: #475569;
+      --text-muted: #64748b;
+
+      --blue-primary: #1d4ed8;
+      --blue-hover: #1e40af;
+      --blue-soft: #eff6ff;
+      --blue-border: #bfdbfe;
+
+      --green-primary: #15803d;
+      --green-soft: #f0fdf4;
+      --green-border: #86efac;
+
+      --red-primary: #b91c1c;
+      --red-soft: #fef2f2;
+      --red-border: #fca5a5;
+
+      --amber-primary: #b45309;
+      --amber-soft: #fffbeb;
+      --amber-border: #fde68a;
+
+      --border-light: #e2e8f0;
+      --border-medium: #cbd5e1;
+
+      --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.07);
+      --shadow-lg: 0 12px 28px rgba(15, 23, 42, 0.14);
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 16px;
+      --radius-full: 9999px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100%;
+      overflow-x: hidden;
+      background-color: var(--bg-page);
+      color: var(--text-primary);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* ==========================================================================
+       CHEMICAL FORMULA TYPOGRAPHY (Subscripts & Superscripts)
+       ========================================================================== */
+    .chem-formula {
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    .chem-formula sub,
+    .chem-formula sup {
+      font-size: 0.72em;
+      line-height: 0;
+      position: relative;
+      vertical-align: baseline;
+      font-weight: 700;
+    }
+
+    .chem-formula sup {
+      top: -0.52em;
+      margin-left: 0.03em;
+    }
+
+    .chem-formula sub {
+      bottom: -0.24em;
+    }
+
+    /* ==========================================================================
+       LAYOUT SHELL
+       ========================================================================== */
+    .app-shell {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 12px 12px 28px;
+    }
+
+    @media (min-width: 640px) {
+      .app-shell {
+        padding: 20px 20px 36px;
+      }
+    }
+
+    .container {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* ==========================================================================
+       HEADER BAR
+       ========================================================================== */
+    .app-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--blue-primary);
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0;
+      letter-spacing: -0.01em;
+    }
+
+    .brand-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin: 0;
+    }
+
+    .header-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ==========================================================================
+       BUTTONS & INTERACTIVE CONTROLS
+       ========================================================================== */
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: inherit;
+      transition: background-color 0.15s ease, border-color 0.15s ease, transform 0.08s ease, box-shadow 0.15s ease;
+    }
+
+    button:focus-visible {
+      outline: 3px solid #60a5fa;
+      outline-offset: 2px;
+    }
+
+    button:active:not(:disabled) {
+      transform: scale(0.99);
+    }
+
+    button:disabled {
+      cursor: default;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      padding: 9px 14px;
+      font-size: 0.88rem;
+      min-height: 40px;
+      border: 1px solid transparent;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: var(--blue-primary);
+      color: #ffffff;
+      box-shadow: 0 2px 6px rgba(29, 78, 216, 0.25);
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--blue-hover);
+    }
+
+    .btn-secondary {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      border-color: var(--border-medium);
+    }
+
+    .btn-secondary:hover:not(:disabled) {
+      background: #e2e8f0;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-secondary);
+      border-color: var(--border-light);
+      padding: 7px 11px;
+      font-size: 0.82rem;
+      min-height: 36px;
+    }
+
+    .btn-ghost:hover:not(:disabled) {
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+    }
+
+    .btn-danger {
+      background: var(--red-primary);
+      color: #ffffff;
+    }
+
+    .btn-danger:hover:not(:disabled) {
+      background: #991b1b;
+    }
+
+    .btn-danger-outline {
+      background: var(--red-soft);
+      color: var(--red-primary);
+      border-color: var(--red-border);
+    }
+
+    .btn-danger-outline:hover:not(:disabled) {
+      background: #fee2e2;
+    }
+
+    .btn-lg {
+      padding: 14px 24px;
+      font-size: 1.05rem;
+      border-radius: var(--radius-md);
+      min-height: 52px;
+      width: 100%;
+    }
+
+    /* ==========================================================================
+       START SCREEN
+       ========================================================================== */
+    .start-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 22px 18px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    @media (min-width: 640px) {
+      .start-card {
+        padding: 30px 28px;
+      }
+    }
+
+    .start-hero {
+      text-align: center;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .start-hero h2 {
+      margin: 0 0 8px;
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .start-hero p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 0.96rem;
+    }
+
+    .section-label {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+    }
+
+    .list-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 600px) {
+      .list-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .choice-card {
+      text-align: left;
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-light);
+      background: var(--bg-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      position: relative;
+    }
+
+    .choice-card:hover {
+      border-color: #93c5fd;
+      background: #ffffff;
+    }
+
+    .choice-card.selected {
+      border-color: var(--blue-primary);
+      background: var(--blue-soft);
+      box-shadow: 0 0 0 1px var(--blue-primary);
+    }
+
+    .choice-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .choice-card-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .choice-card-badge {
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 9px;
+      border-radius: var(--radius-full);
+      background: #ffffff;
+      color: var(--blue-primary);
+      border: 1px solid var(--blue-border);
+      white-space: nowrap;
+    }
+
+    .choice-card-desc {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      margin: 0;
+    }
+
+    .choice-card-progress {
+      margin-top: 4px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--green-primary);
+    }
+
+    .direction-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    @media (min-width: 540px) {
+      .direction-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .dir-btn {
+      padding: 12px 10px;
+      border-radius: var(--radius-sm);
+      border: 2px solid var(--border-light);
+      background: var(--bg-subtle);
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+      text-align: center;
+      min-height: 46px;
+    }
+
+    .dir-btn:hover {
+      border-color: #93c5fd;
+      color: var(--text-primary);
+    }
+
+    .dir-btn.selected {
+      border-color: var(--blue-primary);
+      background: var(--blue-soft);
+      color: var(--blue-primary);
+    }
+
+    /* ==========================================================================
+       QUIZ DASHBOARD & STATUS BAR
+       ========================================================================== */
+    .dashboard-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 12px 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .stats-summary {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stats-items {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 10px;
+    }
+
+    .stat-pill strong {
+      color: var(--text-primary);
+      font-weight: 800;
+    }
+
+    .stat-sep {
+      color: var(--border-medium);
+    }
+
+    .mastery-bar-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .progress-track {
+      flex: 1;
+      height: 8px;
+      background: var(--bg-muted);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--green-primary);
+      border-radius: var(--radius-full);
+      transition: width 0.3s ease;
+    }
+
+    .progress-fill-blue {
+      background: var(--blue-primary);
+    }
+
+    .mastery-bar-label {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* Quick Inline Mode Switchers Bar */
+    .mode-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .toolbar-group {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .select-compact {
+      font-family: inherit;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-medium);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      min-height: 36px;
+      cursor: pointer;
+    }
+
+    .select-compact:focus-visible {
+      outline: 3px solid #60a5fa;
+      outline-offset: 1px;
+    }
+
+    /* ==========================================================================
+       MAIN QUESTION CARD
+       ========================================================================== */
+    .quiz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px 20px;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      position: relative;
+    }
+
+    @media (min-width: 640px) {
+      .quiz-card {
+        padding: 24px 26px 26px;
+      }
+    }
+
+    /* Difficulty & Level Progress Header inside Quiz Card */
+    .level-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px 14px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .level-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--blue-soft);
+      color: var(--blue-primary);
+      border: 1px solid var(--blue-border);
+      font-weight: 800;
+      font-size: 0.84rem;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .level-progress-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      min-width: 185px;
+      max-width: 340px;
+    }
+
+    .level-progress-text {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      white-space: nowrap;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .score-pills-group {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .total-score-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-subtle);
+      color: var(--text-primary);
+      border: 1px solid var(--border-medium);
+      font-weight: 800;
+      font-size: 0.82rem;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .points-live-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--green-soft);
+      color: var(--green-primary);
+      border: 1px solid var(--green-border);
+      font-weight: 800;
+      font-size: 0.84rem;
+      padding: 4px 11px;
+      border-radius: var(--radius-full);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .points-live-pill.tier-mid {
+      background: var(--amber-soft);
+      color: var(--amber-primary);
+      border-color: var(--amber-border);
+    }
+
+    .points-live-pill.tier-low {
+      background: var(--bg-subtle);
+      color: var(--text-secondary);
+      border-color: var(--border-medium);
+    }
+
+    .points-live-pill.tier-earned {
+      background: var(--green-primary);
+      color: #ffffff;
+      border-color: var(--green-primary);
+    }
+
+    .points-live-pill.tier-lost {
+      background: var(--red-primary);
+      color: #ffffff;
+      border-color: var(--red-primary);
+    }
+
+    /* ==========================================================================
+       BADGE UNLOCKED SCREEN SPLASH
+       ========================================================================== */
+    .badge-splash-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.58);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      z-index: 120;
+      animation: splashFadeIn 0.2s ease-out;
+      cursor: pointer;
+    }
+
+    .badge-splash-card {
+      background: var(--bg-card);
+      border: 2px solid var(--amber-border);
+      border-radius: 20px;
+      max-width: 380px;
+      width: 100%;
+      padding: 26px 22px 22px;
+      text-align: center;
+      box-shadow: 0 20px 45px rgba(15, 23, 42, 0.28), 0 0 0 6px rgba(253, 230, 138, 0.35);
+      animation: splashPopIn 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .badge-splash-eyebrow {
+      font-size: 0.74rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--amber-primary);
+      background: var(--amber-soft);
+      border: 1px solid var(--amber-border);
+      padding: 3px 11px;
+      border-radius: var(--radius-full);
+    }
+
+    .badge-splash-emoji {
+      font-size: 3.75rem;
+      line-height: 1.1;
+      margin: 6px 0 2px;
+      filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.14));
+      animation: splashBounce 0.55s ease-out;
+    }
+
+    .badge-splash-title {
+      margin: 0;
+      font-size: 1.32rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .badge-splash-desc {
+      margin: 0;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .badge-splash-hint {
+      margin-top: 8px;
+      font-size: 0.76rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    @keyframes splashFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes splashPopIn {
+      0% { opacity: 0; transform: scale(0.82) translateY(12px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes splashBounce {
+      0% { transform: scale(0.6); }
+      55% { transform: scale(1.16); }
+      80% { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+
+    /* Question Prompt Area */
+    .question-box {
+      text-align: center;
+      padding: 6px 2px 4px;
+      min-height: 78px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .direction-trophy-bar {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-bottom: 6px;
+      min-height: 24px;
+    }
+
+    .badge-shelf {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 2px;
+      min-width: 0;
+      cursor: pointer;
+    }
+
+    @media (min-width: 600px) {
+      .badge-shelf {
+        gap: 4px;
+      }
+    }
+
+    .badge-shelf-left {
+      justify-content: flex-end;
+    }
+
+    .badge-shelf-right {
+      justify-content: flex-start;
+    }
+
+    .mini-animal-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.82rem;
+      line-height: 1;
+      padding: 2px 3px;
+      border-radius: var(--radius-full);
+      background: var(--amber-soft);
+      border: 1px solid var(--amber-border);
+      transition: transform 0.15s ease;
+    }
+
+    @media (min-width: 600px) {
+      .mini-animal-badge {
+        font-size: 0.96rem;
+        padding: 3px 5px;
+      }
+    }
+
+    .mini-animal-badge:hover {
+      transform: scale(1.15);
+    }
+
+    .question-tag {
+      font-size: 0.73rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--text-muted);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    @media (min-width: 600px) {
+      .question-tag {
+        font-size: 0.76rem;
+        letter-spacing: 0.06em;
+      }
+    }
+
+    .question-text {
+      margin: 4px 0 0;
+      font-size: 1.24rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      line-height: 1.35;
+    }
+
+    @media (min-width: 600px) {
+      .question-text {
+        font-size: 1.42rem;
+      }
+    }
+
+    .question-text .chem-formula {
+      font-size: 1.15em;
+      color: var(--blue-primary);
+    }
+
+    /* ==========================================================================
+       ANSWER CHOICES GRID
+       One column on phones; two columns on wider screens when >= 2 choices
+       ========================================================================== */
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 600px) {
+      .options-grid.two-col {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 12px;
+      }
+    }
+
+    .option-btn {
+      width: 100%;
+      min-height: 56px;
+      padding: 13px 16px;
+      border-radius: var(--radius-md);
+      border: 2px solid var(--border-medium);
+      background: #ffffff;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      text-align: left;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--blue-primary);
+      background: var(--blue-soft);
+    }
+
+    .option-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .option-letter {
+      width: 30px;
+      height: 30px;
+      border-radius: 8px;
+      background: var(--bg-page);
+      border: 1px solid var(--border-medium);
+      color: var(--text-secondary);
+      font-size: 0.84rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .option-content {
+      font-size: 1.08rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      word-break: break-word;
+    }
+
+    .option-content .chem-formula {
+      font-size: 1.2rem;
+    }
+
+    .option-status-icon {
+      font-size: 1.15rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* Correct & Incorrect Option States */
+    .option-btn.state-correct {
+      background: var(--green-soft);
+      border-color: var(--green-primary);
+      color: var(--green-primary);
+    }
+
+    .option-btn.state-correct .option-letter {
+      background: var(--green-primary);
+      border-color: var(--green-primary);
+      color: #ffffff;
+    }
+
+    .option-btn.state-correct .option-content {
+      color: #14532d;
+    }
+
+    .option-btn.state-incorrect {
+      background: var(--red-soft);
+      border-color: var(--red-primary);
+      color: var(--red-primary);
+    }
+
+    .option-btn.state-incorrect .option-letter {
+      background: var(--red-primary);
+      border-color: var(--red-primary);
+      color: #ffffff;
+    }
+
+    .option-btn.state-incorrect .option-content {
+      color: #7f1d1d;
+    }
+
+    .option-btn.state-dimmed {
+      opacity: 0.58;
+    }
+
+    /* ==========================================================================
+       FEEDBACK BANNER (Consistent height to avoid jarring layout jumps)
+       ========================================================================== */
+    .feedback-area {
+      min-height: 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .feedback-box {
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      border: 1px solid transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    @media (min-width: 600px) {
+      .feedback-box.has-next {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+      }
+    }
+
+    .feedback-box.correct {
+      background: var(--green-soft);
+      border-color: var(--green-border);
+      color: #14532d;
+    }
+
+    .feedback-box.incorrect {
+      background: var(--red-soft);
+      border-color: var(--red-border);
+      color: #7f1d1d;
+    }
+
+    .feedback-main {
+      font-size: 0.96rem;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .feedback-explain {
+      font-size: 0.88rem;
+      font-weight: 500;
+      margin: 4px 0 0;
+      color: #991b1b;
+    }
+
+    .feedback-placeholder {
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      padding: 8px;
+    }
+
+    .next-btn {
+      flex-shrink: 0;
+      min-height: 44px;
+      padding: 10px 20px;
+      font-size: 0.95rem;
+    }
+
+    /* ==========================================================================
+       PAUSE OVERLAY
+       ========================================================================== */
+    .pause-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(255, 255, 255, 0.97);
+      border-radius: var(--radius-lg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      z-index: 20;
+      gap: 12px;
+    }
+
+    .pause-overlay h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .pause-overlay p {
+      margin: 0 0 8px;
+      color: var(--text-secondary);
+      max-width: 360px;
+      font-size: 0.94rem;
+    }
+
+    /* ==========================================================================
+       EXPANDABLE "MY PROGRESS" PANEL
+       ========================================================================== */
+    .progress-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius-lg);
+      padding: 18px 16px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    @media (min-width: 640px) {
+      .progress-panel {
+        padding: 22px;
+      }
+    }
+
+    .progress-panel-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-light);
+      padding-bottom: 12px;
+    }
+
+    .progress-panel-header h3 {
+      margin: 0;
+      font-size: 1.08rem;
+      font-weight: 800;
+    }
+
+    .ion-mastery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    @media (min-width: 600px) {
+      .ion-mastery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .ion-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      background: var(--bg-subtle);
+    }
+
+    .ion-row.mastered {
+      background: var(--green-soft);
+      border-color: var(--green-border);
+    }
+
+    .ion-row.needs-review {
+      background: var(--amber-soft);
+      border-color: var(--amber-border);
+    }
+
+    .ion-identity {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .ion-name-line {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: var(--text-primary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ion-formula-tag {
+      color: var(--blue-primary);
+      font-weight: 700;
+    }
+
+    .ion-substats {
+      font-size: 0.77rem;
+      color: var(--text-secondary);
+      margin-top: 2px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .status-chip {
+      font-size: 0.73rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .chip-mastered {
+      background: var(--green-primary);
+      color: #ffffff;
+    }
+
+    .chip-progress {
+      background: var(--blue-soft);
+      color: var(--blue-primary);
+      border: 1px solid var(--blue-border);
+    }
+
+    .chip-review {
+      background: #fef3c7;
+      color: var(--amber-primary);
+      border: 1px solid var(--amber-border);
+    }
+
+    .chip-unseen {
+      background: #e2e8f0;
+      color: var(--text-secondary);
+    }
+
+    /* ==========================================================================
+       CUSTOM CONFIRMATION MODAL (No native alert/confirm)
+       ========================================================================== */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      z-index: 100;
+    }
+
+    .modal-dialog {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      max-width: 420px;
+      width: 100%;
+      padding: 22px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border-light);
+    }
+
+    .modal-dialog h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .modal-dialog p {
+      margin: 0 0 18px;
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+
+    /* ==========================================================================
+       EARNED BADGES & MILESTONE CALLOUTS
+       ========================================================================== */
+    .badge-pill-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: var(--amber-soft);
+      color: var(--amber-primary);
+      border: 1px solid var(--amber-border);
+      border-radius: var(--radius-full);
+      padding: 2px 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
+
+    .badge-pill-btn:hover {
+      background: #fef3c7;
+    }
+
+    .badge-toast {
+      margin-top: 8px;
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      background: var(--amber-soft);
+      border: 1px solid var(--amber-border);
+      color: #78350f;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.88rem;
+    }
+
+    .badge-toast-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: var(--radius-full);
+      background: #fef3c7;
+      border: 1px solid var(--amber-border);
+      font-size: 1.15rem;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .badges-section {
+      border-top: 1px solid var(--border-light);
+      padding-top: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .badges-section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .badges-section-header h4 {
+      margin: 0;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .badges-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    @media (min-width: 600px) {
+      .badges-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .badge-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-light);
+      background: var(--bg-subtle);
+    }
+
+    .badge-card.unlocked {
+      background: var(--amber-soft);
+      border-color: var(--amber-border);
+    }
+
+    .badge-card.locked {
+      opacity: 0.65;
+    }
+
+    .badge-icon-wrap {
+      width: 36px;
+      height: 36px;
+      border-radius: var(--radius-full);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 1.2rem;
+      line-height: 1;
+      background: #e2e8f0;
+      filter: grayscale(1);
+      opacity: 0.45;
+    }
+
+    .badge-card.unlocked .badge-icon-wrap {
+      background: #fef3c7;
+      border: 1px solid var(--amber-border);
+      filter: none;
+      opacity: 1;
+    }
+
+    .badge-info {
+      min-width: 0;
+      flex: 1;
+    }
+
+    .badge-title {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .badge-desc {
+      font-size: 0.77rem;
+      color: var(--text-secondary);
+      margin: 2px 0 0;
+    }
+
+    .start-badges-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      font-size: 0.84rem;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <div class="container">
+
+      <!-- ====================================================================
+           HEADER
+           ==================================================================== -->
+      <header class="app-header">
+        <div class="brand">
+          <div class="brand-icon" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 20.66 7 20.66 17 12 22 3.34 17 3.34 7 12 2"></polygon>
+              <circle cx="12" cy="12" r="3"></circle>
+            </svg>
+          </div>
+          <div>
+            <h1 class="brand-title">FJA Polyatomic Ion Mastery</h1>
+            <p class="brand-subtitle">Adaptive Chemistry Practice</p>
+          </div>
+        </div>
+
+        <div id="headerControls" class="header-actions hidden">
+          <button type="button" id="btnToggleProgress" class="btn btn-ghost" aria-expanded="false">
+            View Progress
+          </button>
+          <button type="button" id="btnPauseResume" class="btn btn-ghost">
+            Pause
+          </button>
+          <button type="button" id="btnHomeScreen" class="btn btn-ghost">
+            Setup
+          </button>
+        </div>
+      </header>
+
+      <!-- ====================================================================
+           STARTING SCREEN
+           ==================================================================== -->
+      <main id="startScreen" class="start-card" aria-labelledby="startHeading">
+        <div class="start-hero">
+          <h2 id="startHeading">Master Polyatomic Ions</h2>
+          <p>The better you do, the harder the choices become. Missed ions will return until you master them.</p>
+        </div>
+
+        <div>
+          <span class="section-label" id="listGroupLabel">1. Choose Ion List</span>
+          <div class="list-grid" role="radiogroup" aria-labelledby="listGroupLabel">
+            <button type="button" id="cardEssentials" class="choice-card selected" role="radio" aria-checked="true" data-list="essentials">
+              <div class="choice-card-top">
+                <span class="choice-card-title">Essentials: 13 Ions</span>
+                <span class="choice-card-badge">Core Set</span>
+              </div>
+              <p class="choice-card-desc">
+                Ammonium, acetate, hydroxide, chlorate, nitrate, cyanide, permanganate, carbonate, sulfate, peroxide, chromate, dichromate, and phosphate.
+              </p>
+              <div id="essentialsSavedBadge" class="choice-card-progress"></div>
+            </button>
+
+            <button type="button" id="cardFull" class="choice-card" role="radio" aria-checked="false" data-list="full">
+              <div class="choice-card-top">
+                <span class="choice-card-title">Full List: 21 Ions</span>
+                <span class="choice-card-badge">Complete Set</span>
+              </div>
+              <p class="choice-card-desc">
+                Includes all 13 Essential ions plus chlorite, nitrite, sulfite, phosphite, hydrogen carbonate, hydrogen sulfate, hydrogen phosphate, and dihydrogen phosphate.
+              </p>
+              <div id="fullSavedBadge" class="choice-card-progress"></div>
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <span class="section-label" id="dirGroupLabel">2. Question Direction</span>
+          <div class="direction-grid" role="radiogroup" aria-labelledby="dirGroupLabel">
+            <button type="button" class="dir-btn selected" role="radio" aria-checked="true" data-dir="mixed">
+              Mixed (Recommended)
+            </button>
+            <button type="button" class="dir-btn" role="radio" aria-checked="false" data-dir="nameToFormula">
+              Name &rarr; Formula
+            </button>
+            <button type="button" class="dir-btn" role="radio" aria-checked="false" data-dir="formulaToName">
+              Formula &rarr; Name
+            </button>
+          </div>
+        </div>
+
+        <div id="startBadgesStrip" class="start-badges-strip"></div>
+
+        <button type="button" id="btnStartQuiz" class="btn btn-primary btn-lg">
+          Start Practice
+        </button>
+      </main>
+
+      <!-- ====================================================================
+           ACTIVE ENDLESS QUIZ VIEW
+           ==================================================================== -->
+      <section id="quizSection" class="hidden" style="display: flex; flex-direction: column; gap: 14px;">
+
+        <!-- Compact Student Dashboard -->
+        <div class="dashboard-card" aria-label="Session Statistics">
+          <div class="stats-summary">
+            <div class="stats-items">
+              <span class="stat-pill"><strong id="statScore">0</strong> pts</span>
+              <span class="stat-sep">|</span>
+              <span class="stat-pill"><strong id="statAnswered">0</strong> Answered</span>
+              <span class="stat-sep">|</span>
+              <span class="stat-pill"><strong id="statAccuracy">0%</strong> Correct</span>
+              <span class="stat-sep">|</span>
+              <span class="stat-pill"><strong id="statStreak">0</strong> Streak</span>
+              <span class="stat-sep">|</span>
+              <span class="stat-pill"><strong id="statMastered">0/13</strong> Mastered</span>
+              <span class="stat-sep">|</span>
+              <button type="button" id="statBadgesBtn" class="badge-pill-btn" title="View Earned Badges">
+                <span id="statBadgesCount">0/15 Badges</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="mastery-bar-wrap">
+            <div class="progress-track" aria-hidden="true">
+              <div id="masteryProgressBar" class="progress-fill" style="width: 0%;"></div>
+            </div>
+            <span id="masteryBarLabel" class="mastery-bar-label">0% Mastered</span>
+          </div>
+
+          <div class="mode-toolbar">
+            <div class="toolbar-group">
+              <select id="activeListSelect" class="select-compact" aria-label="Change Ion List">
+                <option value="essentials">List: Essentials (13)</option>
+                <option value="full">List: Full List (21)</option>
+              </select>
+              <select id="activeDirSelect" class="select-compact" aria-label="Change Question Direction">
+                <option value="mixed">Mode: Mixed</option>
+                <option value="nameToFormula">Mode: Name &rarr; Formula</option>
+                <option value="formulaToName">Mode: Formula &rarr; Name</option>
+              </select>
+            </div>
+            <button type="button" id="btnOpenReset" class="btn btn-ghost">
+              Start Over
+            </button>
+          </div>
+        </div>
+
+        <!-- Main Question Card -->
+        <main class="quiz-card" aria-live="polite">
+          <!-- Pause Overlay -->
+          <div id="pauseOverlay" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pauseTitle">
+            <h3 id="pauseTitle">Session Paused</h3>
+            <p>Take your time. Your score, adaptive level, and ion mastery are saved.</p>
+            <button type="button" id="btnResumeOverlay" class="btn btn-primary" style="min-width: 180px; min-height: 46px;">
+              Resume Practice
+            </button>
+          </div>
+
+          <!-- Adaptive Difficulty Indicator, Total Score & Live Question Points -->
+          <div class="level-row">
+            <span id="levelBadge" class="level-badge">Level 1 &bull; 2 Choices</span>
+            <div class="level-progress-box">
+              <div class="progress-track" aria-hidden="true">
+                <div id="levelProgressBar" class="progress-fill progress-fill-blue" style="width: 0%;"></div>
+              </div>
+              <span id="levelProgressText" class="level-progress-text">Round: 0 / 3,000</span>
+            </div>
+            <div class="score-pills-group">
+              <span id="cardTotalScorePill" class="total-score-pill" aria-label="Total score">Total: 0</span>
+              <span id="livePointsPill" class="points-live-pill" aria-label="Points available for this question">1,000 pts</span>
+            </div>
+          </div>
+
+          <!-- Question Prompt -->
+          <div class="question-box">
+            <div class="direction-trophy-bar">
+              <div id="badgesLeftShelf" class="badge-shelf badge-shelf-left" aria-label="Earned Badges"></div>
+              <div id="questionTypeTag" class="question-tag">Name &rarr; Formula</div>
+              <div id="badgesRightShelf" class="badge-shelf badge-shelf-right" aria-label="Earned Badges"></div>
+            </div>
+            <h2 id="questionPrompt" class="question-text">Loading question...</h2>
+          </div>
+
+          <!-- Answer Choices -->
+          <div id="optionsContainer" class="options-grid" role="group" aria-label="Answer Choices">
+            <!-- Dynamically populated buttons -->
+          </div>
+
+          <!-- Feedback & Next Question Control -->
+          <div id="feedbackArea" class="feedback-area">
+            <div class="feedback-placeholder">
+              Select an answer above (or press keys 1&ndash;8 / A&ndash;H).
+            </div>
+          </div>
+        </main>
+
+        <!-- Expandable "My Progress" Section -->
+        <section id="progressPanel" class="progress-panel hidden" aria-labelledby="progressHeading">
+          <div class="progress-panel-header">
+            <div>
+              <h3 id="progressHeading">My Progress (<span id="progressModeLabel">Essentials: 13 Ions</span>)</h3>
+              <p style="margin: 3px 0 0; font-size: 0.82rem; color: var(--text-secondary);">
+                Mastery requires 3 consecutive correct answers for an ion (including both directions in Mixed mode).
+              </p>
+            </div>
+            <button type="button" id="btnResetInPanel" class="btn btn-danger-outline" style="min-height: 36px; font-size: 0.82rem;">
+              Reset Progress
+            </button>
+          </div>
+
+          <div id="ionMasteryGrid" class="ion-mastery-grid">
+            <!-- Dynamically populated per-ion mastery rows -->
+          </div>
+
+          <div id="badgesSection" class="badges-section">
+            <div class="badges-section-header">
+              <h4>Earned Badges (<span id="badgesUnlockedLabel">0/15</span>)</h4>
+            </div>
+            <div id="badgesGrid" class="badges-grid">
+              <!-- Dynamically populated milestone badges -->
+            </div>
+          </div>
+        </section>
+
+      </section>
+
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       BADGE EARNED SCREEN SPLASH OVERLAY
+       ====================================================================== -->
+  <div id="badgeSplashOverlay" class="badge-splash-backdrop hidden" role="status" aria-live="assertive">
+    <div id="badgeSplashCard" class="badge-splash-card">
+      <!-- Dynamically populated when a milestone badge is unlocked -->
+    </div>
+  </div>
+
+  <!-- ======================================================================
+       CUSTOM RESET CONFIRMATION MODAL (Replaces native confirm())
+       ====================================================================== -->
+  <div id="resetModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="resetModalTitle">
+    <div class="modal-dialog">
+      <h3 id="resetModalTitle">Reset Progress?</h3>
+      <p id="resetModalBody">
+        This will erase all saved mastery data, statistics, and adaptive level progress for the current ion list and start over at Level 1.
+      </p>
+      <div class="modal-actions">
+        <button type="button" id="btnCancelReset" class="btn btn-secondary">Cancel</button>
+        <button type="button" id="btnConfirmReset" class="btn btn-danger">Reset &amp; Start Over</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* ========================================================================
+         1. EXACT ION DATABASE (STRICTLY 21 IONS: 13 ESSENTIAL + 8 ADDITIONAL)
+         Sign-first charge notation (e.g., CO3 -2, SO4 -2, PO4 -3)
+         ======================================================================== */
+      const IONS = [
+        // --- ESSENTIAL 13 ---
+        {
+          id: 'ammonium',
+          name: 'Ammonium',
+          formulaBodyHtml: 'NH<sub>4</sub>',
+          formulaHtml: 'NH<sub>4</sub><sup>+</sup>',
+          formulaPlain: 'NH4+',
+          charge: 1,
+          essential: true,
+          root: 'N',
+          oxygens: 0,
+          hydrogens: 4,
+          suffix: 'ium',
+          confusables: ['nitrate', 'nitrite', 'cyanide', 'hydroxide'],
+          lookAlikes: [
+            { bodyHtml: 'NH<sub>3</sub>', charge: 1 },
+            { bodyHtml: 'N<sub>2</sub>H<sub>4</sub>', charge: 1 },
+            { bodyHtml: 'NH<sub>4</sub>', charge: 2 }
+          ]
+        },
+        {
+          id: 'acetate',
+          name: 'Acetate',
+          formulaBodyHtml: 'C<sub>2</sub>H<sub>3</sub>O<sub>2</sub>',
+          formulaHtml: 'C<sub>2</sub>H<sub>3</sub>O<sub>2</sub><sup>&minus;</sup>',
+          formulaPlain: 'C2H3O2-',
+          charge: -1,
+          essential: true,
+          root: 'C',
+          oxygens: 2,
+          hydrogens: 3,
+          suffix: 'ate',
+          confusables: ['carbonate', 'hydrogen_carbonate', 'nitrate', 'chlorate', 'permanganate'],
+          lookAlikes: [
+            { bodyHtml: 'CH<sub>3</sub>O<sub>2</sub>', charge: -1 },
+            { bodyHtml: 'C<sub>2</sub>H<sub>3</sub>O<sub>3</sub>', charge: -1 },
+            { bodyHtml: 'C<sub>2</sub>H<sub>2</sub>O<sub>2</sub>', charge: -1 }
+          ]
+        },
+        {
+          id: 'hydroxide',
+          name: 'Hydroxide',
+          formulaBodyHtml: 'OH',
+          formulaHtml: 'OH<sup>&minus;</sup>',
+          formulaPlain: 'OH-',
+          charge: -1,
+          essential: true,
+          root: 'O',
+          oxygens: 1,
+          hydrogens: 1,
+          suffix: 'ide',
+          confusables: ['peroxide', 'cyanide', 'hydrogen_carbonate', 'hydrogen_sulfate', 'ammonium'],
+          lookAlikes: [
+            { bodyHtml: 'O<sub>2</sub>H', charge: -1 },
+            { bodyHtml: 'HO<sub>2</sub>', charge: -1 },
+            { bodyHtml: 'OH', charge: -2 }
+          ]
+        },
+        {
+          id: 'chlorate',
+          name: 'Chlorate',
+          formulaBodyHtml: 'ClO<sub>3</sub>',
+          formulaHtml: 'ClO<sub>3</sub><sup>&minus;</sup>',
+          formulaPlain: 'ClO3-',
+          charge: -1,
+          essential: true,
+          root: 'Cl',
+          oxygens: 3,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['chlorite', 'carbonate', 'nitrate', 'permanganate', 'acetate'],
+          lookAlikes: [
+            { bodyHtml: 'ClO<sub>4</sub>', charge: -1 },
+            { bodyHtml: 'Cl<sub>2</sub>O<sub>3</sub>', charge: -1 },
+            { bodyHtml: 'ClO<sub>3</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'nitrate',
+          name: 'Nitrate',
+          formulaBodyHtml: 'NO<sub>3</sub>',
+          formulaHtml: 'NO<sub>3</sub><sup>&minus;</sup>',
+          formulaPlain: 'NO3-',
+          charge: -1,
+          essential: true,
+          root: 'N',
+          oxygens: 3,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['nitrite', 'chlorate', 'carbonate', 'cyanide', 'ammonium', 'permanganate'],
+          lookAlikes: [
+            { bodyHtml: 'NO<sub>4</sub>', charge: -1 },
+            { bodyHtml: 'N<sub>2</sub>O<sub>3</sub>', charge: -1 },
+            { bodyHtml: 'NO<sub>3</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'cyanide',
+          name: 'Cyanide',
+          formulaBodyHtml: 'CN',
+          formulaHtml: 'CN<sup>&minus;</sup>',
+          formulaPlain: 'CN-',
+          charge: -1,
+          essential: true,
+          root: 'C',
+          oxygens: 0,
+          hydrogens: 0,
+          suffix: 'ide',
+          confusables: ['hydroxide', 'nitrate', 'nitrite', 'carbonate', 'ammonium'],
+          lookAlikes: [
+            { bodyHtml: 'C<sub>2</sub>N', charge: -1 },
+            { bodyHtml: 'CNO', charge: -1 },
+            { bodyHtml: 'CN', charge: -2 }
+          ]
+        },
+        {
+          id: 'permanganate',
+          name: 'Permanganate',
+          formulaBodyHtml: 'MnO<sub>4</sub>',
+          formulaHtml: 'MnO<sub>4</sub><sup>&minus;</sup>',
+          formulaPlain: 'MnO4-',
+          charge: -1,
+          essential: true,
+          root: 'Mn',
+          oxygens: 4,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['chromate', 'dichromate', 'chlorate', 'nitrate', 'sulfate', 'phosphate'],
+          lookAlikes: [
+            { bodyHtml: 'MnO<sub>3</sub>', charge: -1 },
+            { bodyHtml: 'Mn<sub>2</sub>O<sub>4</sub>', charge: -1 },
+            { bodyHtml: 'MnO<sub>4</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'carbonate',
+          name: 'Carbonate',
+          formulaBodyHtml: 'CO<sub>3</sub>',
+          formulaHtml: 'CO<sub>3</sub><sup>&minus;2</sup>',
+          formulaPlain: 'CO3 -2',
+          charge: -2,
+          essential: true,
+          root: 'C',
+          oxygens: 3,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['hydrogen_carbonate', 'chlorate', 'sulfate', 'chromate', 'peroxide', 'nitrate'],
+          lookAlikes: [
+            { bodyHtml: 'CO<sub>4</sub>', charge: -2 },
+            { bodyHtml: 'CO<sub>2</sub>', charge: -2 },
+            { bodyHtml: 'C<sub>2</sub>O<sub>3</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'sulfate',
+          name: 'Sulfate',
+          formulaBodyHtml: 'SO<sub>4</sub>',
+          formulaHtml: 'SO<sub>4</sub><sup>&minus;2</sup>',
+          formulaPlain: 'SO4 -2',
+          charge: -2,
+          essential: true,
+          root: 'S',
+          oxygens: 4,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['sulfite', 'hydrogen_sulfate', 'carbonate', 'chromate', 'phosphate', 'peroxide'],
+          lookAlikes: [
+            { bodyHtml: 'SO<sub>5</sub>', charge: -2 },
+            { bodyHtml: 'S<sub>2</sub>O<sub>4</sub>', charge: -2 },
+            { bodyHtml: 'SO<sub>4</sub>', charge: -1 }
+          ]
+        },
+        {
+          id: 'peroxide',
+          name: 'Peroxide',
+          formulaBodyHtml: 'O<sub>2</sub>',
+          formulaHtml: 'O<sub>2</sub><sup>&minus;2</sup>',
+          formulaPlain: 'O2 -2',
+          charge: -2,
+          essential: true,
+          root: 'O',
+          oxygens: 2,
+          hydrogens: 0,
+          suffix: 'ide',
+          confusables: ['hydroxide', 'carbonate', 'sulfate', 'chromate', 'dichromate'],
+          lookAlikes: [
+            { bodyHtml: 'O<sub>3</sub>', charge: -2 },
+            { bodyHtml: 'O<sub>4</sub>', charge: -2 },
+            { bodyHtml: 'O<sub>2</sub>', charge: -1 }
+          ]
+        },
+        {
+          id: 'chromate',
+          name: 'Chromate',
+          formulaBodyHtml: 'CrO<sub>4</sub>',
+          formulaHtml: 'CrO<sub>4</sub><sup>&minus;2</sup>',
+          formulaPlain: 'CrO4 -2',
+          charge: -2,
+          essential: true,
+          root: 'Cr',
+          oxygens: 4,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['dichromate', 'permanganate', 'sulfate', 'carbonate', 'phosphate'],
+          lookAlikes: [
+            { bodyHtml: 'CrO<sub>3</sub>', charge: -2 },
+            { bodyHtml: 'Cr<sub>2</sub>O<sub>4</sub>', charge: -2 },
+            { bodyHtml: 'CrO<sub>4</sub>', charge: -1 }
+          ]
+        },
+        {
+          id: 'dichromate',
+          name: 'Dichromate',
+          formulaBodyHtml: 'Cr<sub>2</sub>O<sub>7</sub>',
+          formulaHtml: 'Cr<sub>2</sub>O<sub>7</sub><sup>&minus;2</sup>',
+          formulaPlain: 'Cr2O7 -2',
+          charge: -2,
+          essential: true,
+          root: 'Cr',
+          oxygens: 7,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['chromate', 'permanganate', 'sulfate', 'carbonate', 'peroxide'],
+          lookAlikes: [
+            { bodyHtml: 'Cr<sub>2</sub>O<sub>6</sub>', charge: -2 },
+            { bodyHtml: 'CrO<sub>7</sub>', charge: -2 },
+            { bodyHtml: 'Cr<sub>2</sub>O<sub>7</sub>', charge: -1 }
+          ]
+        },
+        {
+          id: 'phosphate',
+          name: 'Phosphate',
+          formulaBodyHtml: 'PO<sub>4</sub>',
+          formulaHtml: 'PO<sub>4</sub><sup>&minus;3</sup>',
+          formulaPlain: 'PO4 -3',
+          charge: -3,
+          essential: true,
+          root: 'P',
+          oxygens: 4,
+          hydrogens: 0,
+          suffix: 'ate',
+          confusables: ['phosphite', 'hydrogen_phosphate', 'dihydrogen_phosphate', 'sulfate', 'chromate', 'permanganate'],
+          lookAlikes: [
+            { bodyHtml: 'PO<sub>5</sub>', charge: -3 },
+            { bodyHtml: 'P<sub>2</sub>O<sub>4</sub>', charge: -3 },
+            { bodyHtml: 'PO<sub>4</sub>', charge: -2 }
+          ]
+        },
+
+        // --- ADDITIONAL 8 ---
+        {
+          id: 'chlorite',
+          name: 'Chlorite',
+          formulaBodyHtml: 'ClO<sub>2</sub>',
+          formulaHtml: 'ClO<sub>2</sub><sup>&minus;</sup>',
+          formulaPlain: 'ClO2-',
+          charge: -1,
+          essential: false,
+          root: 'Cl',
+          oxygens: 2,
+          hydrogens: 0,
+          suffix: 'ite',
+          confusables: ['chlorate', 'nitrite', 'sulfite', 'cyanide', 'hydroxide'],
+          lookAlikes: [
+            { bodyHtml: 'ClO', charge: -1 },
+            { bodyHtml: 'Cl<sub>2</sub>O<sub>2</sub>', charge: -1 },
+            { bodyHtml: 'ClO<sub>2</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'nitrite',
+          name: 'Nitrite',
+          formulaBodyHtml: 'NO<sub>2</sub>',
+          formulaHtml: 'NO<sub>2</sub><sup>&minus;</sup>',
+          formulaPlain: 'NO2-',
+          charge: -1,
+          essential: false,
+          root: 'N',
+          oxygens: 2,
+          hydrogens: 0,
+          suffix: 'ite',
+          confusables: ['nitrate', 'chlorite', 'sulfite', 'cyanide', 'ammonium'],
+          lookAlikes: [
+            { bodyHtml: 'NO', charge: -1 },
+            { bodyHtml: 'N<sub>2</sub>O<sub>2</sub>', charge: -1 },
+            { bodyHtml: 'NO<sub>2</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'sulfite',
+          name: 'Sulfite',
+          formulaBodyHtml: 'SO<sub>3</sub>',
+          formulaHtml: 'SO<sub>3</sub><sup>&minus;2</sup>',
+          formulaPlain: 'SO3 -2',
+          charge: -2,
+          essential: false,
+          root: 'S',
+          oxygens: 3,
+          hydrogens: 0,
+          suffix: 'ite',
+          confusables: ['sulfate', 'hydrogen_sulfate', 'carbonate', 'nitrite', 'chlorite', 'phosphite'],
+          lookAlikes: [
+            { bodyHtml: 'SO<sub>2</sub>', charge: -2 },
+            { bodyHtml: 'S<sub>2</sub>O<sub>3</sub>', charge: -2 },
+            { bodyHtml: 'SO<sub>3</sub>', charge: -1 }
+          ]
+        },
+        {
+          id: 'phosphite',
+          name: 'Phosphite',
+          formulaBodyHtml: 'PO<sub>3</sub>',
+          formulaHtml: 'PO<sub>3</sub><sup>&minus;3</sup>',
+          formulaPlain: 'PO3 -3',
+          charge: -3,
+          essential: false,
+          root: 'P',
+          oxygens: 3,
+          hydrogens: 0,
+          suffix: 'ite',
+          confusables: ['phosphate', 'hydrogen_phosphate', 'dihydrogen_phosphate', 'sulfite', 'carbonate'],
+          lookAlikes: [
+            { bodyHtml: 'PO<sub>2</sub>', charge: -3 },
+            { bodyHtml: 'P<sub>2</sub>O<sub>3</sub>', charge: -3 },
+            { bodyHtml: 'PO<sub>3</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'hydrogen_carbonate',
+          name: 'Hydrogen carbonate',
+          formulaBodyHtml: 'HCO<sub>3</sub>',
+          formulaHtml: 'HCO<sub>3</sub><sup>&minus;</sup>',
+          formulaPlain: 'HCO3-',
+          charge: -1,
+          essential: false,
+          root: 'C',
+          oxygens: 3,
+          hydrogens: 1,
+          suffix: 'ate',
+          confusables: ['carbonate', 'hydrogen_sulfate', 'hydrogen_phosphate', 'dihydrogen_phosphate', 'chlorate', 'hydroxide'],
+          lookAlikes: [
+            { bodyHtml: 'H<sub>2</sub>CO<sub>3</sub>', charge: -1 },
+            { bodyHtml: 'HCO<sub>4</sub>', charge: -1 },
+            { bodyHtml: 'HCO<sub>3</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'hydrogen_sulfate',
+          name: 'Hydrogen sulfate',
+          formulaBodyHtml: 'HSO<sub>4</sub>',
+          formulaHtml: 'HSO<sub>4</sub><sup>&minus;</sup>',
+          formulaPlain: 'HSO4-',
+          charge: -1,
+          essential: false,
+          root: 'S',
+          oxygens: 4,
+          hydrogens: 1,
+          suffix: 'ate',
+          confusables: ['sulfate', 'sulfite', 'hydrogen_carbonate', 'hydrogen_phosphate', 'dihydrogen_phosphate', 'permanganate'],
+          lookAlikes: [
+            { bodyHtml: 'H<sub>2</sub>SO<sub>4</sub>', charge: -1 },
+            { bodyHtml: 'HSO<sub>3</sub>', charge: -1 },
+            { bodyHtml: 'HSO<sub>4</sub>', charge: -2 }
+          ]
+        },
+        {
+          id: 'hydrogen_phosphate',
+          name: 'Hydrogen phosphate',
+          formulaBodyHtml: 'HPO<sub>4</sub>',
+          formulaHtml: 'HPO<sub>4</sub><sup>&minus;2</sup>',
+          formulaPlain: 'HPO4 -2',
+          charge: -2,
+          essential: false,
+          root: 'P',
+          oxygens: 4,
+          hydrogens: 1,
+          suffix: 'ate',
+          confusables: ['phosphate', 'dihydrogen_phosphate', 'phosphite', 'hydrogen_sulfate', 'hydrogen_carbonate', 'sulfate'],
+          lookAlikes: [
+            { bodyHtml: 'HPO<sub>3</sub>', charge: -2 },
+            { bodyHtml: 'H<sub>2</sub>PO<sub>4</sub>', charge: -2 },
+            { bodyHtml: 'HPO<sub>4</sub>', charge: -1 }
+          ]
+        },
+        {
+          id: 'dihydrogen_phosphate',
+          name: 'Dihydrogen phosphate',
+          formulaBodyHtml: 'H<sub>2</sub>PO<sub>4</sub>',
+          formulaHtml: 'H<sub>2</sub>PO<sub>4</sub><sup>&minus;</sup>',
+          formulaPlain: 'H2PO4-',
+          charge: -1,
+          essential: false,
+          root: 'P',
+          oxygens: 4,
+          hydrogens: 2,
+          suffix: 'ate',
+          confusables: ['hydrogen_phosphate', 'phosphate', 'phosphite', 'hydrogen_sulfate', 'hydrogen_carbonate', 'acetate'],
+          lookAlikes: [
+            { bodyHtml: 'H<sub>3</sub>PO<sub>4</sub>', charge: -1 },
+            { bodyHtml: 'H<sub>2</sub>PO<sub>3</sub>', charge: -1 },
+            { bodyHtml: 'H<sub>2</sub>PO<sub>4</sub>', charge: -2 }
+          ]
+        }
+      ];
+
+      const ION_BY_ID = Object.fromEntries(IONS.map(ion => [ion.id, ion]));
+      const REAL_ION_BY_SIGNATURE = Object.fromEntries(
+        IONS.map(ion => [`${ion.formulaBodyHtml}|${ion.charge}`, ion])
+      );
+
+      /* ========================================================================
+         2. ADAPTIVE DIFFICULTY & MILESTONE BADGE CONFIGURATION
+         ======================================================================== */
+      const LEVEL_CONFIG = [
+        { level: 1, choices: 2, roundPointsRequired: 3000, minDistinctIons: 3 },
+        { level: 2, choices: 3, roundPointsRequired: 4000, minDistinctIons: 4 },
+        { level: 3, choices: 4, roundPointsRequired: 5000, minDistinctIons: 5 },
+        { level: 4, choices: 5, roundPointsRequired: 6000, minDistinctIons: 6 },
+        { level: 5, choices: 6, roundPointsRequired: 7000, minDistinctIons: 7 },
+        { level: 6, choices: 7, roundPointsRequired: 8000, minDistinctIons: 8 },
+        { level: 7, choices: 8, roundPointsRequired: null, minDistinctIons: null }
+      ];
+
+      const BADGES = [
+        {
+          id: 'first_correct',
+          emoji: '\uD83D\uDC23',
+          title: 'First Reaction',
+          desc: 'Answer your very first polyatomic ion question correctly.',
+          check: (s) => Math.max(s.modes.essentials.totalCorrect, s.modes.full.totalCorrect) >= 1
+        },
+        {
+          id: 'streak_5',
+          emoji: '\uD83D\uDC1D',
+          title: 'Catalyst',
+          desc: 'Achieve a streak of 5 correct answers in a row.',
+          check: (s) => Math.max(s.modes.essentials.bestStreak, s.modes.full.bestStreak) >= 5
+        },
+        {
+          id: 'streak_12',
+          emoji: '\uD83E\uDD8A',
+          title: 'Chain Reaction',
+          desc: 'Achieve a streak of 12 correct answers in a row.',
+          check: (s) => Math.max(s.modes.essentials.bestStreak, s.modes.full.bestStreak) >= 12
+        },
+        {
+          id: 'level_4',
+          emoji: '\uD83E\uDD85',
+          title: 'Rising Chemist',
+          desc: 'Advance to Level 4 (5 answer choices).',
+          check: (s) => Math.max(s.modes.essentials.highestLevel, s.modes.full.highestLevel) >= 4
+        },
+        {
+          id: 'level_7',
+          emoji: '\uD83D\uDC09',
+          title: 'Apex Challenge',
+          desc: 'Reach Level 7 (8 answer choices).',
+          check: (s) => Math.max(s.modes.essentials.highestLevel, s.modes.full.highestLevel) >= 7
+        },
+        {
+          id: 'mastered_1',
+          emoji: '\uD83D\uDC22',
+          title: 'First Ion Mastered',
+          desc: 'Master your first polyatomic ion (3 consecutive correct).',
+          check: (s) =>
+            getMasteredCount('essentials', s.modes.essentials, 'mixed') >= 1 ||
+            getMasteredCount('full', s.modes.full, 'mixed') >= 1
+        },
+        {
+          id: 'mastered_5',
+          emoji: '\uD83D\uDC2C',
+          title: 'Ion Explorer',
+          desc: 'Master 5 polyatomic ions in a single list.',
+          check: (s) =>
+            getMasteredCount('essentials', s.modes.essentials, 'mixed') >= 5 ||
+            getMasteredCount('full', s.modes.full, 'mixed') >= 5
+        },
+        {
+          id: 'mastered_essentials',
+          emoji: '\uD83E\uDD89',
+          title: 'Essentials Master',
+          desc: 'Master all 13 Essential polyatomic ions.',
+          check: (s) => getMasteredCount('essentials', s.modes.essentials, 'mixed') >= 13
+        },
+        {
+          id: 'mastered_full',
+          emoji: '\uD83E\uDD81',
+          title: 'Grand Polyatomic Scholar',
+          desc: 'Master all 21 polyatomic ions on the Full List.',
+          check: (s) => getMasteredCount('full', s.modes.full, 'mixed') >= 21
+        },
+        {
+          id: 'answered_25',
+          emoji: '\uD83D\uDC27',
+          title: 'Dedicated Lab Partner',
+          desc: 'Complete 25 total practice questions.',
+          check: (s) => (s.modes.essentials.totalAnswered + s.modes.full.totalAnswered) >= 25
+        },
+        {
+          id: 'answered_100',
+          emoji: '\uD83D\uDC18',
+          title: 'Century Club',
+          desc: 'Complete 100 total practice questions.',
+          check: (s) => (s.modes.essentials.totalAnswered + s.modes.full.totalAnswered) >= 100
+        },
+        {
+          id: 'sharp_shooter',
+          emoji: '\uD83D\uDC06',
+          title: 'Precision Formula',
+          desc: 'Maintain 90%+ accuracy across at least 20 questions in a list.',
+          check: (s) => {
+            const e = s.modes.essentials;
+            const f = s.modes.full;
+            const eOk = e.totalAnswered >= 20 && (e.totalCorrect / e.totalAnswered) >= 0.9;
+            const fOk = f.totalAnswered >= 20 && (f.totalCorrect / f.totalAnswered) >= 0.9;
+            return eOk || fOk;
+          }
+        },
+        {
+          id: 'score_5k',
+          emoji: '\uD83D\uDC3A',
+          title: 'Point Collector',
+          desc: 'Reach a cumulative score of 5,000 points in a list.',
+          check: (s) => Math.max(s.modes.essentials.bestScore || 0, s.modes.full.bestScore || 0) >= 5000
+        },
+        {
+          id: 'score_15k',
+          emoji: '\uD83E\uDD88',
+          title: 'High Voltage',
+          desc: 'Reach a cumulative score of 15,000 points in a list.',
+          check: (s) => Math.max(s.modes.essentials.bestScore || 0, s.modes.full.bestScore || 0) >= 15000
+        },
+        {
+          id: 'score_40k',
+          emoji: '\uD83E\uDD84',
+          title: 'Ion Legend',
+          desc: 'Reach a cumulative score of 40,000 points in a list.',
+          check: (s) => Math.max(s.modes.essentials.bestScore || 0, s.modes.full.bestScore || 0) >= 40000
+        }
+      ];
+
+      const OPTION_LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+      const STORAGE_KEY = 'fja_polyatomic_ion_mastery_v1';
+      const DEMOTION_WINDOW = 5;
+      const DEMOTION_MISS_LIMIT = 2;
+
+      const MAX_QUESTION_POINTS = 1000;   // Starting points per question
+      const MIN_QUESTION_POINTS = 250;    // Minimum floor so there is never a forced timeout
+      const POINT_DECAY_GRACE_MS = 1200;  // Full points held for 1.2s to read the prompt
+      const POINT_DECAY_SPAN_MS = 12000;  // Decays smoothly over 12s down to MIN_QUESTION_POINTS
+      const BADGE_SPLASH_MS = 2100;       // Duration celebratory badge splash stays on screen
+
+      function formatPoints(num) {
+        return Math.round(num).toLocaleString('en-US');
+      }
+
+      /* ========================================================================
+         3. CHARGE FORMATTING & STATE PERSISTENCE (localStorage with safe fallback)
+         ======================================================================== */
+      function formatChargePlain(charge) {
+        if (charge === 1) return '+';
+        if (charge === -1) return '-';
+        if (charge > 1) return `+${charge}`;
+        return `-${Math.abs(charge)}`;
+      }
+
+      function formatChargeHtml(charge) {
+        if (charge === 1) return '+';
+        if (charge === -1) return '&minus;';
+        if (charge > 1) return `+${charge}`;
+        return `&minus;${Math.abs(charge)}`;
+      }
+
+      function createDefaultDirectionStats() {
+        return {
+          attempts: 0,
+          correct: 0,
+          consecutiveCorrect: 0,
+          lastSeenIndex: -999,
+          dueAfterIndex: -1,
+          cooldownUntil: -1
+        };
+      }
+
+      function createDefaultIonStats() {
+        return {
+          attempts: 0,
+          correct: 0,
+          incorrect: 0,
+          consecutiveCorrect: 0,
+          nameToFormulaCorrect: 0,
+          formulaToNameCorrect: 0,
+          dirStats: {
+            nameToFormula: createDefaultDirectionStats(),
+            formulaToName: createDefaultDirectionStats()
+          },
+          lastWrongAnswer: null,
+          lastSeenIndex: -999,
+          dueAfterIndex: -1
+        };
+      }
+
+      function createDefaultModeState() {
+        const ionStats = {};
+        IONS.forEach(ion => {
+          ionStats[ion.id] = createDefaultIonStats();
+        });
+        return {
+          score: 0,
+          roundScore: 0,
+          bestScore: 0,
+          totalAnswered: 0,
+          totalCorrect: 0,
+          currentStreak: 0,
+          bestStreak: 0,
+          currentLevel: 1,
+          highestLevel: 1,
+          levelUniqueIonIds: [],
+          recentResults: [],
+          recentDirections: [],
+          lastIonId: null,
+          lastQuestionKey: null,
+          ionStats
+        };
+      }
+
+      function createDefaultStore() {
+        return {
+          selectedList: 'essentials',
+          selectedDirection: 'mixed',
+          unlockedBadges: [],
+          modes: {
+            essentials: createDefaultModeState(),
+            full: createDefaultModeState()
+          }
+        };
+      }
+
+      function sanitizeModeState(rawMode) {
+        const base = createDefaultModeState();
+        if (!rawMode || typeof rawMode !== 'object') return base;
+
+        base.score = Number.isFinite(rawMode.score) ? Math.max(0, Math.round(rawMode.score)) : 0;
+        base.roundScore = Number.isFinite(rawMode.roundScore) ? Math.max(0, Math.round(rawMode.roundScore)) : 0;
+        base.bestScore = Number.isFinite(rawMode.bestScore) ? Math.max(0, Math.round(rawMode.bestScore)) : Math.max(0, base.score);
+        base.totalAnswered = Number.isFinite(rawMode.totalAnswered) ? Math.max(0, rawMode.totalAnswered) : 0;
+        base.totalCorrect = Number.isFinite(rawMode.totalCorrect) ? Math.max(0, rawMode.totalCorrect) : 0;
+        base.currentStreak = Number.isFinite(rawMode.currentStreak) ? Math.max(0, rawMode.currentStreak) : 0;
+        base.bestStreak = Number.isFinite(rawMode.bestStreak) ? Math.max(0, rawMode.bestStreak) : 0;
+
+        if (Number.isFinite(rawMode.currentLevel)) {
+          base.currentLevel = Math.min(LEVEL_CONFIG.length, Math.max(1, Math.round(rawMode.currentLevel)));
+        }
+        if (Number.isFinite(rawMode.highestLevel)) {
+          base.highestLevel = Math.min(LEVEL_CONFIG.length, Math.max(base.currentLevel, Math.round(rawMode.highestLevel)));
+        } else {
+          base.highestLevel = base.currentLevel;
+        }
+
+        base.levelUniqueIonIds = Array.isArray(rawMode.levelUniqueIonIds)
+          ? rawMode.levelUniqueIonIds.filter(id => Boolean(ION_BY_ID[id]))
+          : [];
+
+        base.recentResults = Array.isArray(rawMode.recentResults)
+          ? rawMode.recentResults.slice(-DEMOTION_WINDOW).map(Boolean)
+          : [];
+
+        base.recentDirections = Array.isArray(rawMode.recentDirections)
+          ? rawMode.recentDirections.filter(d => d === 'nameToFormula' || d === 'formulaToName').slice(-6)
+          : [];
+
+        base.lastIonId = typeof rawMode.lastIonId === 'string' && ION_BY_ID[rawMode.lastIonId]
+          ? rawMode.lastIonId
+          : null;
+
+        base.lastQuestionKey = typeof rawMode.lastQuestionKey === 'string' ? rawMode.lastQuestionKey : null;
+
+        if (rawMode.ionStats && typeof rawMode.ionStats === 'object') {
+          IONS.forEach(ion => {
+            const saved = rawMode.ionStats[ion.id];
+            if (saved && typeof saved === 'object') {
+              const target = base.ionStats[ion.id];
+              target.attempts = Number.isFinite(saved.attempts) ? Math.max(0, saved.attempts) : 0;
+              target.correct = Number.isFinite(saved.correct) ? Math.max(0, saved.correct) : 0;
+              target.incorrect = Number.isFinite(saved.incorrect) ? Math.max(0, saved.incorrect) : 0;
+              target.consecutiveCorrect = Number.isFinite(saved.consecutiveCorrect) ? Math.max(0, saved.consecutiveCorrect) : 0;
+              target.nameToFormulaCorrect = Number.isFinite(saved.nameToFormulaCorrect) ? Math.max(0, saved.nameToFormulaCorrect) : 0;
+              target.formulaToNameCorrect = Number.isFinite(saved.formulaToNameCorrect) ? Math.max(0, saved.formulaToNameCorrect) : 0;
+              target.lastWrongAnswer = typeof saved.lastWrongAnswer === 'string' ? saved.lastWrongAnswer : null;
+              target.lastSeenIndex = Number.isFinite(saved.lastSeenIndex) ? saved.lastSeenIndex : -999;
+              target.dueAfterIndex = Number.isFinite(saved.dueAfterIndex) ? saved.dueAfterIndex : -1;
+
+              ['nameToFormula', 'formulaToName'].forEach(dir => {
+                const savedDir = saved.dirStats && saved.dirStats[dir];
+                if (savedDir && typeof savedDir === 'object') {
+                  target.dirStats[dir] = {
+                    attempts: Number.isFinite(savedDir.attempts) ? Math.max(0, savedDir.attempts) : 0,
+                    correct: Number.isFinite(savedDir.correct) ? Math.max(0, savedDir.correct) : 0,
+                    consecutiveCorrect: Number.isFinite(savedDir.consecutiveCorrect) ? Math.max(0, savedDir.consecutiveCorrect) : 0,
+                    lastSeenIndex: Number.isFinite(savedDir.lastSeenIndex) ? savedDir.lastSeenIndex : -999,
+                    dueAfterIndex: Number.isFinite(savedDir.dueAfterIndex) ? savedDir.dueAfterIndex : -1,
+                    cooldownUntil: Number.isFinite(savedDir.cooldownUntil) ? savedDir.cooldownUntil : -1
+                  };
+                }
+              });
+            }
+          });
+        }
+        return base;
+      }
+
+      function loadStore() {
+        const fallback = createDefaultStore();
+        try {
+          const raw = window.localStorage.getItem(STORAGE_KEY);
+          if (!raw) return fallback;
+          const parsed = JSON.parse(raw);
+          if (!parsed || typeof parsed !== 'object') return fallback;
+
+          if (parsed.selectedList === 'essentials' || parsed.selectedList === 'full') {
+            fallback.selectedList = parsed.selectedList;
+          }
+          // Always default to Mixed on initial screen load so mixed mode is ready right away
+          fallback.selectedDirection = 'mixed';
+          if (Array.isArray(parsed.unlockedBadges)) {
+            const validIds = new Set(BADGES.map(b => b.id));
+            fallback.unlockedBadges = parsed.unlockedBadges.filter(id => validIds.has(id));
+          }
+          if (parsed.modes) {
+            fallback.modes.essentials = sanitizeModeState(parsed.modes.essentials);
+            fallback.modes.full = sanitizeModeState(parsed.modes.full);
+          }
+        } catch (err) {
+          // Graceful fallback when localStorage is blocked in restricted iframes
+        }
+        return fallback;
+      }
+
+      function saveStore() {
+        try {
+          window.localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+        } catch (err) {
+          // Ignore storage quota or sandbox restrictions silently
+        }
+      }
+
+      let store = loadStore();
+
+      // Ephemeral UI session state
+      const sessionState = {
+        paused: false,
+        progressOpen: false,
+        answered: false,
+        selectedOptionIndex: null,
+        currentQuestion: null,
+        autoAdvanceTimer: null,
+        pointTimer: null,
+        questionElapsedMs: 0,
+        lastTickTimestamp: 0,
+        currentAvailablePoints: MAX_QUESTION_POINTS,
+        lastPointDelta: 0,
+        badgeSplashTimer: null
+      };
+
+      /* ========================================================================
+         4. DOM REFERENCES
+         ======================================================================== */
+      const els = {
+        startScreen: document.getElementById('startScreen'),
+        quizSection: document.getElementById('quizSection'),
+        headerControls: document.getElementById('headerControls'),
+
+        cardEssentials: document.getElementById('cardEssentials'),
+        cardFull: document.getElementById('cardFull'),
+        essentialsSavedBadge: document.getElementById('essentialsSavedBadge'),
+        fullSavedBadge: document.getElementById('fullSavedBadge'),
+        startBadgesStrip: document.getElementById('startBadgesStrip'),
+        btnStartQuiz: document.getElementById('btnStartQuiz'),
+
+        btnToggleProgress: document.getElementById('btnToggleProgress'),
+        btnPauseResume: document.getElementById('btnPauseResume'),
+        btnHomeScreen: document.getElementById('btnHomeScreen'),
+
+        statScore: document.getElementById('statScore'),
+        statAnswered: document.getElementById('statAnswered'),
+        statAccuracy: document.getElementById('statAccuracy'),
+        statStreak: document.getElementById('statStreak'),
+        statMastered: document.getElementById('statMastered'),
+        statBadgesBtn: document.getElementById('statBadgesBtn'),
+        statBadgesCount: document.getElementById('statBadgesCount'),
+        masteryProgressBar: document.getElementById('masteryProgressBar'),
+        masteryBarLabel: document.getElementById('masteryBarLabel'),
+
+        activeListSelect: document.getElementById('activeListSelect'),
+        activeDirSelect: document.getElementById('activeDirSelect'),
+        btnOpenReset: document.getElementById('btnOpenReset'),
+
+        pauseOverlay: document.getElementById('pauseOverlay'),
+        btnResumeOverlay: document.getElementById('btnResumeOverlay'),
+
+        levelBadge: document.getElementById('levelBadge'),
+        levelProgressBar: document.getElementById('levelProgressBar'),
+        levelProgressText: document.getElementById('levelProgressText'),
+        cardTotalScorePill: document.getElementById('cardTotalScorePill'),
+        livePointsPill: document.getElementById('livePointsPill'),
+
+        badgesLeftShelf: document.getElementById('badgesLeftShelf'),
+        badgesRightShelf: document.getElementById('badgesRightShelf'),
+        questionTypeTag: document.getElementById('questionTypeTag'),
+        questionPrompt: document.getElementById('questionPrompt'),
+        optionsContainer: document.getElementById('optionsContainer'),
+        feedbackArea: document.getElementById('feedbackArea'),
+
+        progressPanel: document.getElementById('progressPanel'),
+        progressModeLabel: document.getElementById('progressModeLabel'),
+        btnResetInPanel: document.getElementById('btnResetInPanel'),
+        ionMasteryGrid: document.getElementById('ionMasteryGrid'),
+        badgesSection: document.getElementById('badgesSection'),
+        badgesUnlockedLabel: document.getElementById('badgesUnlockedLabel'),
+        badgesGrid: document.getElementById('badgesGrid'),
+
+        badgeSplashOverlay: document.getElementById('badgeSplashOverlay'),
+        badgeSplashCard: document.getElementById('badgeSplashCard'),
+
+        resetModal: document.getElementById('resetModal'),
+        resetModalBody: document.getElementById('resetModalBody'),
+        btnCancelReset: document.getElementById('btnCancelReset'),
+        btnConfirmReset: document.getElementById('btnConfirmReset')
+      };
+
+      /* ========================================================================
+         5. HELPER UTILITIES & MASTERY EVALUATION
+         ======================================================================== */
+      function getActiveIonPool(listKey) {
+        if (listKey === 'essentials') {
+          return IONS.filter(ion => ion.essential);
+        }
+        return IONS.slice();
+      }
+
+      function getActiveModeState() {
+        return store.modes[store.selectedList];
+      }
+
+      function getLevelSpec(level) {
+        const clamped = Math.min(LEVEL_CONFIG.length, Math.max(1, level));
+        return LEVEL_CONFIG[clamped - 1];
+      }
+
+      function isIonMastered(ion, iStats, directionMode) {
+        if (!iStats || iStats.consecutiveCorrect < 3) return false;
+        if (directionMode === 'mixed') {
+          return iStats.nameToFormulaCorrect >= 1 && iStats.formulaToNameCorrect >= 1;
+        }
+        return true;
+      }
+
+      function getMasteredCount(listKey, modeState, directionMode) {
+        const pool = getActiveIonPool(listKey);
+        let count = 0;
+        for (const ion of pool) {
+          if (isIonMastered(ion, modeState.ionStats[ion.id], directionMode)) {
+            count++;
+          }
+        }
+        return count;
+      }
+
+      function evaluateBadges() {
+        const newlyUnlocked = [];
+        for (const badge of BADGES) {
+          if (!store.unlockedBadges.includes(badge.id)) {
+            if (badge.check(store)) {
+              store.unlockedBadges.push(badge.id);
+              newlyUnlocked.push(badge);
+            }
+          }
+        }
+        return newlyUnlocked;
+      }
+
+      function showBadgeSplash(badge) {
+        if (!badge || !els.badgeSplashOverlay || !els.badgeSplashCard) return;
+        if (sessionState.badgeSplashTimer) {
+          clearTimeout(sessionState.badgeSplashTimer);
+          sessionState.badgeSplashTimer = null;
+        }
+        els.badgeSplashCard.innerHTML = `
+          <span class="badge-splash-eyebrow">Badge Unlocked!</span>
+          <div class="badge-splash-emoji" aria-hidden="true">${badge.emoji}</div>
+          <h3 class="badge-splash-title">${badge.title}</h3>
+          <p class="badge-splash-desc">${badge.desc}</p>
+          <span class="badge-splash-hint">Tap anywhere to continue</span>
+        `;
+        els.badgeSplashOverlay.classList.remove('hidden');
+        sessionState.badgeSplashTimer = setTimeout(() => {
+          hideBadgeSplash();
+        }, BADGE_SPLASH_MS);
+      }
+
+      function hideBadgeSplash() {
+        if (sessionState.badgeSplashTimer) {
+          clearTimeout(sessionState.badgeSplashTimer);
+          sessionState.badgeSplashTimer = null;
+        }
+        if (els.badgeSplashOverlay) {
+          els.badgeSplashOverlay.classList.add('hidden');
+        }
+      }
+
+      function renderHeaderBadgeShelves() {
+        if (!els.badgesLeftShelf || !els.badgesRightShelf) return;
+        const earned = BADGES.filter(b => store.unlockedBadges.includes(b.id));
+        const leftBadges = [];
+        const rightBadges = [];
+
+        earned.forEach((b, idx) => {
+          if (idx % 2 === 0) {
+            leftBadges.push(b);
+          } else {
+            rightBadges.push(b);
+          }
+        });
+
+        els.badgesLeftShelf.innerHTML = leftBadges
+          .map(b => `<span class="mini-animal-badge" title="${b.title}: ${b.desc}" aria-label="${b.title}">${b.emoji}</span>`)
+          .join('');
+        els.badgesRightShelf.innerHTML = rightBadges
+          .map(b => `<span class="mini-animal-badge" title="${b.title}: ${b.desc}" aria-label="${b.title}">${b.emoji}</span>`)
+          .join('');
+      }
+
+      /* ========================================================================
+         LIVE KAHOOT-STYLE QUESTION POINT DECAY TIMER
+         ======================================================================== */
+      function stopPointTimer() {
+        if (sessionState.pointTimer) {
+          clearInterval(sessionState.pointTimer);
+          sessionState.pointTimer = null;
+        }
+      }
+
+      function updateLivePointsDisplay() {
+        if (!els.livePointsPill) return;
+        const pts = sessionState.currentAvailablePoints;
+        els.livePointsPill.className = 'points-live-pill';
+
+        if (sessionState.answered) {
+          if (sessionState.lastPointDelta > 0) {
+            els.livePointsPill.classList.add('tier-earned');
+            els.livePointsPill.textContent = `+${formatPoints(sessionState.lastPointDelta)} pts`;
+          } else {
+            els.livePointsPill.classList.add('tier-lost');
+            els.livePointsPill.textContent = 'Round Reset';
+          }
+          return;
+        }
+
+        els.livePointsPill.textContent = `${formatPoints(pts)} pts`;
+        if (pts < 450) {
+          els.livePointsPill.classList.add('tier-low');
+        } else if (pts < 750) {
+          els.livePointsPill.classList.add('tier-mid');
+        }
+      }
+
+      function startPointTimer(resetStart = true) {
+        stopPointTimer();
+        if (resetStart) {
+          sessionState.questionElapsedMs = 0;
+          sessionState.currentAvailablePoints = MAX_QUESTION_POINTS;
+          sessionState.lastPointDelta = 0;
+        }
+        sessionState.lastTickTimestamp = Date.now();
+        updateLivePointsDisplay();
+
+        sessionState.pointTimer = setInterval(() => {
+          if (sessionState.paused || sessionState.answered) return;
+          const now = Date.now();
+          const dt = Math.max(0, now - sessionState.lastTickTimestamp);
+          sessionState.lastTickTimestamp = now;
+          sessionState.questionElapsedMs += dt;
+
+          const activeDecayMs = Math.max(0, sessionState.questionElapsedMs - POINT_DECAY_GRACE_MS);
+          const ratio = Math.min(1, activeDecayMs / POINT_DECAY_SPAN_MS);
+          const range = MAX_QUESTION_POINTS - MIN_QUESTION_POINTS;
+          // Smoothly decay in 5-point increments
+          const rawPts = MAX_QUESTION_POINTS - ratio * range;
+          sessionState.currentAvailablePoints = Math.max(
+            MIN_QUESTION_POINTS,
+            Math.round(rawPts / 5) * 5
+          );
+          updateLivePointsDisplay();
+        }, 120);
+      }
+
+      /* ========================================================================
+         6. INTELLIGENT QUESTION & DISTRACTOR GENERATION
+         ======================================================================== */
+      function chooseQuestionDirection(directionMode, modeState) {
+        if (directionMode === 'nameToFormula') return 'nameToFormula';
+        if (directionMode === 'formulaToName') return 'formulaToName';
+
+        const recent = Array.isArray(modeState.recentDirections) ? modeState.recentDirections : [];
+        if (recent.length === 0) {
+          return Math.random() < 0.5 ? 'nameToFormula' : 'formulaToName';
+        }
+
+        const lastDir = recent[recent.length - 1];
+        const otherDir = lastDir === 'nameToFormula' ? 'formulaToName' : 'nameToFormula';
+
+        // Never repeat the exact same direction more than 2 times in a row
+        if (recent.length >= 2 && recent[recent.length - 2] === lastDir) {
+          return otherDir;
+        }
+
+        // Balance recent direction counts while alternating ~68% of the time
+        const n2fCount = recent.filter(d => d === 'nameToFormula').length;
+        const f2nCount = recent.length - n2fCount;
+        if (n2fCount > f2nCount + 1) return 'formulaToName';
+        if (f2nCount > n2fCount + 1) return 'nameToFormula';
+
+        return Math.random() < 0.68 ? otherDir : lastDir;
+      }
+
+      function selectNextIon(pool, modeState, direction) {
+        const qIndex = modeState.totalAnswered;
+        const isFullMode = store.selectedList === 'full';
+
+        // 1. Check for due missed prompts in THIS specific direction (spaced 3-6 intervening questions)
+        const dueForDir = pool.filter(ion => {
+          const iStats = modeState.ionStats[ion.id] || createDefaultIonStats();
+          const dStats = (iStats.dirStats && iStats.dirStats[direction]) || createDefaultDirectionStats();
+          return (
+            dStats.dueAfterIndex >= 0 &&
+            qIndex >= dStats.dueAfterIndex &&
+            ion.id !== modeState.lastIonId
+          );
+        });
+
+        if (dueForDir.length > 0) {
+          dueForDir.sort((a, b) => {
+            const aDue = modeState.ionStats[a.id].dirStats[direction].dueAfterIndex;
+            const bDue = modeState.ionStats[b.id].dirStats[direction].dueAfterIndex;
+            return aDue - bDue;
+          });
+          return dueForDir[0];
+        }
+
+        // 2. Build weighted candidate list based strictly on THIS direction's cooldown & mastery
+        const candidates = pool.filter(ion => pool.length <= 1 || ion.id !== modeState.lastIonId);
+
+        const weights = candidates.map(ion => {
+          const iStats = modeState.ionStats[ion.id] || createDefaultIonStats();
+          const dStats = (iStats.dirStats && iStats.dirStats[direction]) || createDefaultDirectionStats();
+
+          // If this specific ion+direction is still inside its earned cooldown window, keep weight very low
+          if (dStats.cooldownUntil > qIndex) {
+            const remaining = dStats.cooldownUntil - qIndex;
+            return Math.max(0.18, 0.9 / (1 + remaining * 0.45));
+          }
+
+          let weight = 10;
+
+          if (dStats.attempts === 0) {
+            weight = 14;
+          } else if (dStats.consecutiveCorrect === 0) {
+            weight = 18;
+          } else if (dStats.consecutiveCorrect === 1) {
+            weight = 9;
+          } else if (dStats.consecutiveCorrect === 2) {
+            weight = 5;
+          } else {
+            // Mastered in this direction; still returns periodically for retention
+            weight = 2.2;
+          }
+
+          // Extra boost once a past cooldown has expired so long-unseen directions return naturally
+          const sinceDirSeen = qIndex - dStats.lastSeenIndex;
+          if (dStats.attempts > 0 && sinceDirSeen >= 8) {
+            weight += Math.min(8, (sinceDirSeen - 7) * 0.65);
+          }
+
+          // Preferential reinforcement for the 8 additional ions in Full List mode if struggling
+          if (isFullMode && !ion.essential && dStats.attempts > 0) {
+            const dirAcc = dStats.correct / dStats.attempts;
+            if (dirAcc < 0.75 || dStats.consecutiveCorrect < 2) {
+              weight *= 1.35;
+            }
+          }
+
+          return Math.max(0.2, weight);
+        });
+
+        const totalWeight = weights.reduce((sum, w) => sum + w, 0);
+        let roll = Math.random() * totalWeight;
+        for (let i = 0; i < candidates.length; i++) {
+          roll -= weights[i];
+          if (roll <= 0) {
+            return candidates[i];
+          }
+        }
+        return candidates[candidates.length - 1];
+      }
+
+      function shuffleArray(arr) {
+        const copy = arr.slice();
+        for (let i = copy.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          const tmp = copy[i];
+          copy[i] = copy[j];
+          copy[j] = tmp;
+        }
+        return copy;
+      }
+
+      /**
+       * Selects intelligent distractors from the active ion list plus plausible
+       * formula red herrings (wrong charges or look-alike subscripts) on Name -> Formula.
+       */
+      function buildDistractors(targetIon, pool, direction, level, totalChoices) {
+        const needed = totalChoices - 1;
+        const selected = [];
+        const usedKeys = new Set([
+          direction === 'nameToFormula' ? targetIon.formulaHtml : targetIon.name
+        ]);
+
+        // Helper to push a valid real-ion distractor from the active pool
+        const addRealIonDistractor = (ion) => {
+          if (!ion || ion.id === targetIon.id) return false;
+          const displayHtml = direction === 'nameToFormula' ? ion.formulaHtml : ion.name;
+          if (usedKeys.has(displayHtml)) return false;
+          usedKeys.add(displayHtml);
+          selected.push({
+            ionId: ion.id,
+            displayHtml,
+            plainText: direction === 'nameToFormula' ? ion.formulaPlain : ion.name,
+            isCorrect: false,
+            redHerringType: null
+          });
+          return true;
+        };
+
+        // Helper to push a formula red herring (Name -> Formula only)
+        const addFormulaRedHerring = (bodyHtml, charge, type, wrongChargeValue) => {
+          const formulaHtml = `${bodyHtml}<sup>${formatChargeHtml(charge)}</sup>`;
+          if (usedKeys.has(formulaHtml)) return false;
+
+          const sig = `${bodyHtml}|${charge}`;
+          const matchingRealIon = REAL_ION_BY_SIGNATURE[sig];
+          if (matchingRealIon) {
+            if (!pool.some(p => p.id === matchingRealIon.id)) return false;
+            return addRealIonDistractor(matchingRealIon);
+          }
+
+          usedKeys.add(formulaHtml);
+          selected.push({
+            ionId: null,
+            displayHtml: formulaHtml,
+            plainText: `${bodyHtml.replace(/<[^>]+>/g, '')}${formatChargePlain(charge)}`,
+            isCorrect: false,
+            redHerringType: type,
+            wrongChargeValue: wrongChargeValue || charge
+          });
+          return true;
+        };
+
+        // Build red-herring candidates when asking for a formula
+        const redHerringPool = [];
+        if (direction === 'nameToFormula') {
+          const altCharges = [-1, -2, -3, 1].filter(c => c !== targetIon.charge);
+          const prioritizedCharges = altCharges.sort((a, b) => Math.abs(a - targetIon.charge) - Math.abs(b - targetIon.charge));
+          for (const wc of prioritizedCharges.slice(0, 2)) {
+            redHerringPool.push({
+              bodyHtml: targetIon.formulaBodyHtml,
+              charge: wc,
+              type: 'wrongCharge',
+              wrongChargeValue: wc
+            });
+          }
+
+          if (Array.isArray(targetIon.lookAlikes)) {
+            for (const la of targetIon.lookAlikes) {
+              const isChargeVariant = la.bodyHtml === targetIon.formulaBodyHtml;
+              redHerringPool.push({
+                bodyHtml: la.bodyHtml,
+                charge: la.charge,
+                type: isChargeVariant ? 'wrongCharge' : 'lookAlike',
+                wrongChargeValue: la.charge
+              });
+            }
+          }
+        }
+
+        const otherIons = pool.filter(ion => ion.id !== targetIon.id);
+        const scoredIons = otherIons.map(ion => {
+          let similarity = 0;
+
+          if (targetIon.confusables.includes(ion.id)) {
+            const idx = targetIon.confusables.indexOf(ion.id);
+            similarity += Math.max(40, 95 - idx * 12);
+          }
+          if (ion.root === targetIon.root) similarity += 45;
+          if (ion.charge === targetIon.charge) similarity += 20;
+          if (ion.suffix === targetIon.suffix) similarity += 10;
+          if (
+            (targetIon.hydrogens > 0 || ion.hydrogens > 0) &&
+            ion.root === targetIon.root
+          ) {
+            similarity += 35;
+          }
+
+          return { ion, similarity, tieBreaker: Math.random() };
+        });
+
+        scoredIons.sort((a, b) => (b.similarity - a.similarity) || (a.tieBreaker - b.tieBreaker));
+
+        const hardRealPool = scoredIons.filter(s => s.similarity >= 45).map(s => s.ion);
+        const mediumRealPool = scoredIons.filter(s => s.similarity >= 20 && s.similarity < 45).map(s => s.ion);
+        const easyRealPool = scoredIons.filter(s => s.similarity < 20).map(s => s.ion);
+
+        if (level === 1) {
+          const easyCandidates = shuffleArray(easyRealPool.length > 0 ? easyRealPool : otherIons);
+          for (const c of easyCandidates) {
+            if (selected.length >= needed) break;
+            addRealIonDistractor(c);
+          }
+        } else if (level <= 3) {
+          const hardCount = Math.max(1, Math.floor(needed * 0.5));
+          const shuffledHard = shuffleArray(hardRealPool);
+          const shuffledOther = shuffleArray([...mediumRealPool, ...easyRealPool]);
+
+          for (const c of shuffledHard) {
+            if (selected.length >= hardCount) break;
+            addRealIonDistractor(c);
+          }
+          if (direction === 'nameToFormula' && selected.length < needed && Math.random() < 0.55) {
+            const rh = shuffleArray(redHerringPool)[0];
+            if (rh) addFormulaRedHerring(rh.bodyHtml, rh.charge, rh.type, rh.wrongChargeValue);
+          }
+          for (const c of shuffledOther) {
+            if (selected.length >= needed) break;
+            addRealIonDistractor(c);
+          }
+        } else {
+          const targetHardCount = Math.min(needed - 1, Math.ceil(needed * 0.65));
+          const shuffledHard = shuffleArray(hardRealPool);
+          const shuffledMixed = shuffleArray([...mediumRealPool, ...easyRealPool]);
+
+          if (direction === 'nameToFormula' && redHerringPool.length > 0) {
+            const rhTarget = level >= 6 ? 2 : 1;
+            const shuffledRH = shuffleArray(redHerringPool);
+            let rhAdded = 0;
+            for (const rh of shuffledRH) {
+              if (rhAdded >= rhTarget || selected.length >= targetHardCount) break;
+              if (addFormulaRedHerring(rh.bodyHtml, rh.charge, rh.type, rh.wrongChargeValue)) {
+                rhAdded++;
+              }
+            }
+          }
+
+          for (const c of shuffledHard) {
+            if (selected.length >= targetHardCount) break;
+            addRealIonDistractor(c);
+          }
+          for (const c of shuffledMixed) {
+            if (selected.length >= needed) break;
+            addRealIonDistractor(c);
+          }
+        }
+
+        // Guarantee we never fall short of required choices
+        for (const c of shuffleArray(otherIons)) {
+          if (selected.length >= needed) break;
+          addRealIonDistractor(c);
+        }
+        if (direction === 'nameToFormula') {
+          for (const rh of shuffleArray(redHerringPool)) {
+            if (selected.length >= needed) break;
+            addFormulaRedHerring(rh.bodyHtml, rh.charge, rh.type, rh.wrongChargeValue);
+          }
+        }
+
+        return selected.slice(0, needed);
+      }
+
+      function generateQuestion() {
+        const modeState = getActiveModeState();
+        const pool = getActiveIonPool(store.selectedList);
+        const spec = getLevelSpec(modeState.currentLevel);
+
+        let direction = chooseQuestionDirection(store.selectedDirection, modeState);
+        let targetIon = selectNextIon(pool, modeState, direction);
+        let qKey = `${targetIon.id}:${direction}`;
+
+        // Avoid asking the exact same question consecutively
+        if (qKey === modeState.lastQuestionKey && pool.length > 1) {
+          if (store.selectedDirection === 'mixed') {
+            direction = direction === 'nameToFormula' ? 'formulaToName' : 'nameToFormula';
+            qKey = `${targetIon.id}:${direction}`;
+          } else {
+            const altPool = pool.filter(ion => ion.id !== targetIon.id);
+            targetIon = altPool[Math.floor(Math.random() * altPool.length)];
+            qKey = `${targetIon.id}:${direction}`;
+          }
+        }
+
+        const totalChoices = Math.min(spec.choices, pool.length);
+        const distractors = buildDistractors(targetIon, pool, direction, modeState.currentLevel, totalChoices);
+
+        const correctOption = {
+          ionId: targetIon.id,
+          displayHtml: direction === 'nameToFormula' ? targetIon.formulaHtml : targetIon.name,
+          plainText: direction === 'nameToFormula' ? targetIon.formulaPlain : targetIon.name,
+          isCorrect: true
+        };
+
+        const options = shuffleArray([correctOption, ...distractors]);
+
+        const promptHtml = direction === 'nameToFormula'
+          ? `What is the formula for <strong>${targetIon.name.toLowerCase()}</strong>?`
+          : `What is the name of <span class="chem-formula">${targetIon.formulaHtml}</span>?`;
+
+        return {
+          targetIon,
+          direction,
+          qKey,
+          promptHtml,
+          options
+        };
+      }
+
+      /* ========================================================================
+         7. TARGETED CHEMISTRY TEACHING EXPLANATIONS
+         Respects active ion list (never introduces Additional 8 in Essentials mode)
+         ======================================================================== */
+      function buildExplanation(targetIon, direction, chosenOpt) {
+        const isFullMode = store.selectedList === 'full';
+        const chosenIon = chosenOpt && chosenOpt.ionId ? ION_BY_ID[chosenOpt.ionId] : null;
+        const notes = [];
+
+        if (chosenOpt && chosenOpt.redHerringType === 'wrongCharge') {
+          notes.push(
+            `${chosenOpt.displayHtml} has the right atoms (${targetIon.formulaBodyHtml}), but the wrong charge (${formatChargeHtml(chosenOpt.wrongChargeValue)} instead of ${formatChargeHtml(targetIon.charge)}).`
+          );
+          return notes.join(' ');
+        }
+        if (chosenOpt && chosenOpt.redHerringType === 'lookAlike') {
+          notes.push(
+            `${chosenOpt.displayHtml} is a look-alike distractor with altered subscripts; ${targetIon.name.toLowerCase()} has the exact formula ${targetIon.formulaHtml}.`
+          );
+          return notes.join(' ');
+        }
+
+        if (chosenIon) {
+          notes.push(
+            `You selected ${chosenIon.name.toLowerCase()} (${chosenIon.formulaHtml}).`
+          );
+
+          // -ate vs -ite comparison
+          if (
+            isFullMode &&
+            targetIon.root === chosenIon.root &&
+            targetIon.hydrogens === chosenIon.hydrogens &&
+            targetIon.charge === chosenIon.charge &&
+            targetIon.oxygens !== chosenIon.oxygens
+          ) {
+            if (targetIon.suffix === 'ite' && chosenIon.suffix === 'ate') {
+              notes.push(
+                `${targetIon.name} has one fewer oxygen than ${chosenIon.name.toLowerCase()} (${chosenIon.formulaHtml}), while keeping the same ${formatChargeHtml(targetIon.charge)} charge.`
+              );
+            } else if (targetIon.suffix === 'ate' && chosenIon.suffix === 'ite') {
+              notes.push(
+                `${targetIon.name} has one more oxygen than ${chosenIon.name.toLowerCase()} (${chosenIon.formulaHtml}), while keeping the same ${formatChargeHtml(targetIon.charge)} charge.`
+              );
+            }
+            return notes.join(' ');
+          }
+
+          // Hydrogen-added oxoanion comparison
+          if (
+            isFullMode &&
+            targetIon.root === chosenIon.root &&
+            targetIon.oxygens === chosenIon.oxygens &&
+            targetIon.hydrogens !== chosenIon.hydrogens
+          ) {
+            const hDiff = Math.abs(targetIon.hydrogens - chosenIon.hydrogens);
+            if (hDiff === 1) {
+              notes.push(
+                `Adding one hydrogen (H<sup>+</sup>) to the beginning of the formula makes the ion charge one unit more positive (${formatChargeHtml(chosenIon.charge)} &rarr; ${formatChargeHtml(targetIon.charge)}).`
+              );
+            } else if (hDiff === 2) {
+              notes.push(
+                `Adding two hydrogens (2 H<sup>+</sup>) makes the ion charge two units more positive (${formatChargeHtml(chosenIon.charge)} &rarr; ${formatChargeHtml(targetIon.charge)}).`
+              );
+            }
+            return notes.join(' ');
+          }
+
+          // Chromate vs Dichromate
+          if (
+            (targetIon.id === 'chromate' && chosenIon.id === 'dichromate') ||
+            (targetIon.id === 'dichromate' && chosenIon.id === 'chromate')
+          ) {
+            notes.push(
+              `Chromate is CrO<sub>4</sub><sup>&minus;2</sup> (1 chromium, 4 oxygens), whereas dichromate is Cr<sub>2</sub>O<sub>7</sub><sup>&minus;2</sup> (2 chromiums, 7 oxygens).`
+            );
+            return notes.join(' ');
+          }
+
+          // Charge reminder when formulas differ in charge
+          if (targetIon.charge !== chosenIon.charge) {
+            notes.push(
+              `Notice the charge difference: ${targetIon.name.toLowerCase()} carries a ${formatChargeHtml(targetIon.charge)} charge, whereas ${chosenIon.name.toLowerCase()} carries a ${formatChargeHtml(chosenIon.charge)} charge.`
+            );
+            return notes.join(' ');
+          }
+        }
+
+        // General helpful reminder when no specific pair rule matched
+        if (isFullMode && targetIon.suffix === 'ite') {
+          notes.push(
+            `Reminder: An -ite ion has one fewer oxygen than its corresponding -ate ion while keeping the same ${formatChargeHtml(targetIon.charge)} charge.`
+          );
+        } else if (isFullMode && targetIon.hydrogens === 1 && targetIon.id !== 'hydroxide') {
+          notes.push(
+            `Reminder: Adding one hydrogen to the beginning of the formula makes the ion charge one unit more positive (${formatChargeHtml(targetIon.charge)}).`
+          );
+        } else if (isFullMode && targetIon.hydrogens === 2 && targetIon.id === 'dihydrogen_phosphate') {
+          notes.push(
+            `Reminder: Two added hydrogens make the charge two units more positive (${formatChargeHtml(targetIon.charge)}).`
+          );
+        } else {
+          notes.push(
+            `Memorize both the exact subscripts and the ${formatChargeHtml(targetIon.charge)} charge for ${targetIon.name.toLowerCase()}.`
+          );
+        }
+
+        return notes.join(' ');
+      }
+
+      /* ========================================================================
+         8. ANSWER EVALUATION, ADAPTIVE LEVELING & UI RENDERING
+         ======================================================================== */
+      function handleAnswer(selectedIndex) {
+        if (sessionState.answered || sessionState.paused || !sessionState.currentQuestion) {
+          return;
+        }
+
+        const q = sessionState.currentQuestion;
+        const chosen = q.options[selectedIndex];
+        if (!chosen) return;
+
+        sessionState.answered = true;
+        sessionState.selectedOptionIndex = selectedIndex;
+
+        const modeState = getActiveModeState();
+        const targetIon = q.targetIon;
+        const isCorrect = chosen.isCorrect;
+        const qIndex = modeState.totalAnswered;
+
+        // Freeze point countdown and calculate earned points (Total Score never decreases; Round Score resets on miss)
+        stopPointTimer();
+        const pointDelta = isCorrect ? sessionState.currentAvailablePoints : 0;
+        sessionState.lastPointDelta = pointDelta;
+        if (isCorrect) {
+          modeState.score = (modeState.score || 0) + pointDelta;
+          modeState.roundScore = (modeState.roundScore || 0) + pointDelta;
+          if (modeState.score > (modeState.bestScore || 0)) {
+            modeState.bestScore = modeState.score;
+          }
+        } else {
+          modeState.roundScore = 0;
+        }
+
+        // Ensure ionStats record exists
+        if (!modeState.ionStats[targetIon.id]) {
+          modeState.ionStats[targetIon.id] = createDefaultIonStats();
+        }
+        const iStats = modeState.ionStats[targetIon.id];
+        if (!iStats.dirStats) {
+          iStats.dirStats = {
+            nameToFormula: createDefaultDirectionStats(),
+            formulaToName: createDefaultDirectionStats()
+          };
+        }
+        const dirStats = iStats.dirStats[q.direction];
+
+        // Update overall and per-ion/direction statistics
+        modeState.totalAnswered += 1;
+        modeState.lastIonId = targetIon.id;
+        modeState.lastQuestionKey = q.qKey;
+
+        modeState.recentDirections = Array.isArray(modeState.recentDirections) ? modeState.recentDirections : [];
+        modeState.recentDirections.push(q.direction);
+        if (modeState.recentDirections.length > 6) {
+          modeState.recentDirections.shift();
+        }
+
+        iStats.attempts += 1;
+        iStats.lastSeenIndex = qIndex;
+        dirStats.attempts += 1;
+        dirStats.lastSeenIndex = qIndex;
+
+        if (isCorrect) {
+          modeState.totalCorrect += 1;
+          iStats.correct += 1;
+          iStats.consecutiveCorrect += 1;
+          iStats.dueAfterIndex = -1;
+
+          dirStats.correct += 1;
+          dirStats.consecutiveCorrect += 1;
+          dirStats.dueAfterIndex = -1;
+
+          // Push ONLY this ion+direction into an expanding cooldown window so the reverse direction is unaffected
+          const jitter = Math.floor(Math.random() * 4);
+          let cooldownSpan = 5 + jitter;
+          if (dirStats.consecutiveCorrect === 2) {
+            cooldownSpan = 9 + jitter;
+          } else if (dirStats.consecutiveCorrect >= 3) {
+            cooldownSpan = 14 + Math.floor(Math.random() * 5);
+          }
+          dirStats.cooldownUntil = qIndex + cooldownSpan;
+
+          if (q.direction === 'nameToFormula') {
+            iStats.nameToFormulaCorrect += 1;
+          } else {
+            iStats.formulaToNameCorrect += 1;
+          }
+
+          modeState.currentStreak += 1;
+          if (modeState.currentStreak > modeState.bestStreak) {
+            modeState.bestStreak = modeState.currentStreak;
+          }
+
+          // Adaptive promotion tracking (requires round score threshold + distinct ion coverage)
+          if (!modeState.levelUniqueIonIds.includes(targetIon.id)) {
+            modeState.levelUniqueIonIds.push(targetIon.id);
+          }
+
+          const spec = getLevelSpec(modeState.currentLevel);
+          if (
+            spec.roundPointsRequired !== null &&
+            modeState.roundScore >= spec.roundPointsRequired &&
+            modeState.levelUniqueIonIds.length >= spec.minDistinctIons
+          ) {
+            modeState.currentLevel = Math.min(LEVEL_CONFIG.length, modeState.currentLevel + 1);
+            if (modeState.currentLevel > modeState.highestLevel) {
+              modeState.highestLevel = modeState.currentLevel;
+            }
+            modeState.roundScore = 0;
+            modeState.levelUniqueIonIds = [];
+          }
+        } else {
+          iStats.incorrect += 1;
+          iStats.consecutiveCorrect = 0;
+          iStats.lastWrongAnswer = chosen.plainText;
+
+          dirStats.consecutiveCorrect = 0;
+          dirStats.cooldownUntil = -1;
+
+          // Schedule missed ion+direction to return after 3 to 6 intervening questions
+          const spacing = 3 + Math.floor(Math.random() * 4);
+          iStats.dueAfterIndex = qIndex + spacing;
+          dirStats.dueAfterIndex = qIndex + spacing;
+
+          modeState.currentStreak = 0;
+          modeState.roundScore = 0;
+          modeState.levelUniqueIonIds = [];
+        }
+
+        // Rolling demotion check: 2 misses within the most recent 5 questions lowers level by 1
+        modeState.recentResults.push(isCorrect);
+        if (modeState.recentResults.length > DEMOTION_WINDOW) {
+          modeState.recentResults.shift();
+        }
+        if (!isCorrect && modeState.currentLevel > 1) {
+          const recentMisses = modeState.recentResults.filter(res => !res).length;
+          if (recentMisses >= DEMOTION_MISS_LIMIT) {
+            modeState.currentLevel = Math.max(1, modeState.currentLevel - 1);
+            modeState.roundScore = 0;
+            modeState.levelUniqueIonIds = [];
+            modeState.recentResults = [];
+          }
+        }
+
+        const newlyUnlockedBadges = evaluateBadges();
+        saveStore();
+        updateLivePointsDisplay();
+        renderHeaderBadgeShelves();
+        renderDashboard();
+        renderAnsweredState(isCorrect, newlyUnlockedBadges);
+
+        if (newlyUnlockedBadges.length > 0) {
+          showBadgeSplash(newlyUnlockedBadges[newlyUnlockedBadges.length - 1]);
+        }
+
+        if (sessionState.progressOpen) {
+          renderProgressPanel();
+        }
+
+        // Auto-advance after ~0.7 seconds when correct (gives extra time if badge splash popped up)
+        if (isCorrect) {
+          clearAutoAdvanceTimer();
+          const advanceDelay = newlyUnlockedBadges.length > 0 ? 1850 : 720;
+          sessionState.autoAdvanceTimer = setTimeout(() => {
+            if (!sessionState.paused && sessionState.answered) {
+              loadNextQuestion();
+            }
+          }, advanceDelay);
+        }
+      }
+
+      function renderQuestion() {
+        const modeState = getActiveModeState();
+        const spec = getLevelSpec(modeState.currentLevel);
+        const q = sessionState.currentQuestion;
+
+        // Adaptive Level Badge, Round Score Progress & Total Score Pill
+        els.levelBadge.textContent = `Level ${spec.level} \u2022 ${q.options.length} Choices`;
+        els.cardTotalScorePill.textContent = `Total: ${formatPoints(modeState.score || 0)}`;
+
+        const currentRound = modeState.roundScore || 0;
+        if (spec.roundPointsRequired === null) {
+          els.levelProgressBar.style.width = '100%';
+          els.levelProgressText.textContent = `Round: ${formatPoints(currentRound)} pts`;
+        } else {
+          const scoreRatio = Math.min(1, currentRound / spec.roundPointsRequired);
+          const coverageRatio = Math.min(1, modeState.levelUniqueIonIds.length / spec.minDistinctIons);
+          const pct = Math.round(Math.min(scoreRatio, coverageRatio) * 100);
+          els.levelProgressBar.style.width = `${pct}%`;
+
+          if (currentRound >= spec.roundPointsRequired && modeState.levelUniqueIonIds.length < spec.minDistinctIons) {
+            els.levelProgressText.textContent = `${modeState.levelUniqueIonIds.length}/${spec.minDistinctIons} ions to Level ${spec.level + 1}`;
+          } else {
+            els.levelProgressText.textContent = `Round: ${formatPoints(currentRound)} / ${formatPoints(spec.roundPointsRequired)}`;
+          }
+        }
+
+        // Question Direction Header & Trophy Shelves
+        renderHeaderBadgeShelves();
+        els.questionTypeTag.innerHTML = q.direction === 'nameToFormula'
+          ? 'Name &rarr; Formula'
+          : 'Formula &rarr; Name';
+        els.questionPrompt.innerHTML = q.promptHtml;
+
+        // Options Grid (1 column on phones, 2 columns on wider screens)
+        els.optionsContainer.className = q.options.length >= 2 ? 'options-grid two-col' : 'options-grid';
+        els.optionsContainer.innerHTML = '';
+
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'option-btn';
+          btn.setAttribute('data-index', String(idx));
+
+          const contentClass = q.direction === 'nameToFormula' ? 'option-content chem-formula' : 'option-content';
+
+          btn.innerHTML = `
+            <span class="option-left">
+              <span class="option-letter">${OPTION_LETTERS[idx]}</span>
+              <span class="${contentClass}">${opt.displayHtml}</span>
+            </span>
+            <span class="option-status-icon" aria-hidden="true"></span>
+          `;
+
+          btn.addEventListener('click', () => handleAnswer(idx));
+          els.optionsContainer.appendChild(btn);
+        });
+
+        // Reset Feedback Area
+        els.feedbackArea.innerHTML = `
+          <div class="feedback-placeholder">
+            Select an answer above (or press keys 1&ndash;8 / A&ndash;H).
+          </div>
+        `;
+      }
+
+      function renderAnsweredState(isCorrect, newlyUnlockedBadges = []) {
+        const q = sessionState.currentQuestion;
+        const buttons = els.optionsContainer.querySelectorAll('.option-btn');
+
+        buttons.forEach((btn, idx) => {
+          const opt = q.options[idx];
+          btn.disabled = true;
+          const iconSpan = btn.querySelector('.option-status-icon');
+
+          if (opt.isCorrect) {
+            btn.classList.add('state-correct');
+            iconSpan.textContent = '\u2713';
+          } else if (idx === sessionState.selectedOptionIndex) {
+            btn.classList.add('state-incorrect');
+            iconSpan.textContent = '\u2717';
+          } else {
+            btn.classList.add('state-dimmed');
+          }
+        });
+
+        const badgeToastHtml = newlyUnlockedBadges.length > 0
+          ? newlyUnlockedBadges.map(b => `
+              <div class="badge-toast" role="status">
+                <span class="badge-toast-icon" aria-hidden="true">${b.emoji}</span>
+                <div>
+                  <strong>Badge Unlocked: ${b.title}!</strong> &mdash; ${b.desc}
+                </div>
+              </div>
+            `).join('')
+          : '';
+
+        if (isCorrect) {
+          els.feedbackArea.innerHTML = `
+            <div>
+              <div class="feedback-box correct">
+                <p class="feedback-main">Correct! +${formatPoints(sessionState.lastPointDelta)} pts &bull; ${q.targetIon.name} is ${q.targetIon.formulaHtml}.</p>
+              </div>
+              ${badgeToastHtml}
+            </div>
+          `;
+        } else {
+          const chosenOpt = q.options[sessionState.selectedOptionIndex];
+          const explanation = buildExplanation(q.targetIon, q.direction, chosenOpt);
+          els.feedbackArea.innerHTML = `
+            <div>
+              <div class="feedback-box incorrect has-next">
+                <div>
+                  <p class="feedback-main">Incorrect (Round score reset to 0). ${q.targetIon.name} is ${q.targetIon.formulaHtml}.</p>
+                  <p class="feedback-explain">${explanation}</p>
+                </div>
+                <button type="button" id="btnNextQuestion" class="btn btn-primary next-btn">
+                  Next Question &rarr;
+                </button>
+              </div>
+              ${badgeToastHtml}
+            </div>
+          `;
+          const nextBtn = document.getElementById('btnNextQuestion');
+          if (nextBtn) {
+            nextBtn.addEventListener('click', () => loadNextQuestion());
+            nextBtn.focus();
+          }
+        }
+      }
+
+      function renderDashboard() {
+        const modeState = getActiveModeState();
+        const pool = getActiveIonPool(store.selectedList);
+        const totalIons = pool.length;
+        const masteredCount = getMasteredCount(store.selectedList, modeState, store.selectedDirection);
+        const accuracy = modeState.totalAnswered > 0
+          ? Math.round((modeState.totalCorrect / modeState.totalAnswered) * 100)
+          : 0;
+
+        els.statScore.textContent = formatPoints(modeState.score || 0);
+        if (els.cardTotalScorePill) {
+          els.cardTotalScorePill.textContent = `Total: ${formatPoints(modeState.score || 0)}`;
+        }
+        els.statAnswered.textContent = String(modeState.totalAnswered);
+        els.statAccuracy.textContent = `${accuracy}%`;
+        els.statStreak.textContent = String(modeState.currentStreak);
+        els.statMastered.textContent = `${masteredCount}/${totalIons}`;
+        els.statBadgesCount.textContent = `${store.unlockedBadges.length}/${BADGES.length} Badges`;
+
+        const pctMastered = totalIons > 0 ? Math.round((masteredCount / totalIons) * 100) : 0;
+        els.masteryProgressBar.style.width = `${pctMastered}%`;
+        els.masteryBarLabel.textContent = `${pctMastered}% Mastered`;
+      }
+
+      function renderProgressPanel() {
+        const modeState = getActiveModeState();
+        const pool = getActiveIonPool(store.selectedList);
+        els.progressModeLabel.textContent = store.selectedList === 'full'
+          ? 'Full List: 21 Ions'
+          : 'Essentials: 13 Ions';
+
+        els.ionMasteryGrid.innerHTML = '';
+
+        pool.forEach(ion => {
+          const iStats = modeState.ionStats[ion.id] || createDefaultIonStats();
+          const mastered = isIonMastered(ion, iStats, store.selectedDirection);
+          const acc = iStats.attempts > 0 ? Math.round((iStats.correct / iStats.attempts) * 100) : null;
+
+          let rowClass = 'ion-row';
+          let chipClass = 'status-chip chip-unseen';
+          let chipLabel = 'Not Seen';
+
+          if (mastered) {
+            rowClass += ' mastered';
+            chipClass = 'status-chip chip-mastered';
+            chipLabel = 'Mastered';
+          } else if (iStats.dueAfterIndex >= 0 || (iStats.attempts > 0 && iStats.consecutiveCorrect === 0)) {
+            rowClass += ' needs-review';
+            chipClass = 'status-chip chip-review';
+            chipLabel = 'Needs Review';
+          } else if (iStats.attempts > 0) {
+            chipClass = 'status-chip chip-progress';
+            chipLabel = `${iStats.consecutiveCorrect}/3 Streak`;
+          }
+
+          const substatsText = iStats.attempts > 0
+            ? `${iStats.correct}/${iStats.attempts} correct (${acc}%)`
+            : 'No attempts yet';
+
+          const row = document.createElement('div');
+          row.className = rowClass;
+          row.innerHTML = `
+            <div class="ion-identity">
+              <div class="ion-name-line">
+                <span>${ion.name}</span>
+                <span class="ion-formula-tag chem-formula">${ion.formulaHtml}</span>
+              </div>
+              <div class="ion-substats">${substatsText}</div>
+            </div>
+            <span class="${chipClass}">${chipLabel}</span>
+          `;
+          els.ionMasteryGrid.appendChild(row);
+        });
+
+        // Render Milestone Badges Grid
+        els.badgesUnlockedLabel.textContent = `${store.unlockedBadges.length}/${BADGES.length}`;
+        els.badgesGrid.innerHTML = '';
+
+        BADGES.forEach(badge => {
+          const isUnlocked = store.unlockedBadges.includes(badge.id);
+          const card = document.createElement('div');
+          card.className = `badge-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+          card.innerHTML = `
+            <div class="badge-icon-wrap" aria-hidden="true">${badge.emoji}</div>
+            <div class="badge-info">
+              <p class="badge-title">${badge.title}</p>
+              <p class="badge-desc">${badge.desc}</p>
+            </div>
+            <span class="status-chip ${isUnlocked ? 'chip-mastered' : 'chip-unseen'}">
+              ${isUnlocked ? 'Earned' : 'Locked'}
+            </span>
+          `;
+          els.badgesGrid.appendChild(card);
+        });
+      }
+
+      function renderStartScreen() {
+        // Highlight selected list card
+        [els.cardEssentials, els.cardFull].forEach(card => {
+          const isSel = card.getAttribute('data-list') === store.selectedList;
+          card.classList.toggle('selected', isSel);
+          card.setAttribute('aria-checked', String(isSel));
+        });
+
+        // Highlight selected direction button
+        document.querySelectorAll('.dir-btn').forEach(btn => {
+          const isSel = btn.getAttribute('data-dir') === store.selectedDirection;
+          btn.classList.toggle('selected', isSel);
+          btn.setAttribute('aria-checked', String(isSel));
+        });
+
+        // Show saved progress summary on each list card
+        const essState = store.modes.essentials;
+        const essMastered = getMasteredCount('essentials', essState, store.selectedDirection);
+        els.essentialsSavedBadge.textContent = essState.totalAnswered > 0
+          ? `Saved: ${essMastered}/13 Mastered \u2022 Level ${essState.currentLevel} \u2022 Total: ${formatPoints(essState.score || 0)} pts`
+          : 'Ready to begin at Level 1';
+
+        const fullState = store.modes.full;
+        const fullMastered = getMasteredCount('full', fullState, store.selectedDirection);
+        els.fullSavedBadge.textContent = fullState.totalAnswered > 0
+          ? `Saved: ${fullMastered}/21 Mastered \u2022 Level ${fullState.currentLevel} \u2022 Total: ${formatPoints(fullState.score || 0)} pts`
+          : 'Ready to begin at Level 1';
+
+        // Show earned animal badges strip on start screen
+        const earned = BADGES.filter(b => store.unlockedBadges.includes(b.id));
+        if (earned.length > 0) {
+          const emojis = earned.map(b => b.emoji).join(' ');
+          els.startBadgesStrip.innerHTML = `<span>Earned Badges (${earned.length}/${BADGES.length}):</span> <span style="font-size: 1.05rem;">${emojis}</span>`;
+        } else {
+          els.startBadgesStrip.textContent = `0/${BADGES.length} Animal Badges Earned \u2022 Answer questions to unlock your first badge!`;
+        }
+      }
+
+      /* ========================================================================
+         9. NAVIGATION, SESSION FLOW, PAUSE/RESUME & RESET
+         ======================================================================== */
+      function clearAutoAdvanceTimer() {
+        if (sessionState.autoAdvanceTimer) {
+          clearTimeout(sessionState.autoAdvanceTimer);
+          sessionState.autoAdvanceTimer = null;
+        }
+      }
+
+      function loadNextQuestion() {
+        clearAutoAdvanceTimer();
+        stopPointTimer();
+        sessionState.answered = false;
+        sessionState.selectedOptionIndex = null;
+        sessionState.currentQuestion = generateQuestion();
+        renderQuestion();
+        startPointTimer(true);
+      }
+
+      function enterQuizView() {
+        sessionState.paused = false;
+        els.pauseOverlay.classList.add('hidden');
+        els.btnPauseResume.textContent = 'Pause';
+
+        els.activeListSelect.value = store.selectedList;
+        els.activeDirSelect.value = store.selectedDirection;
+
+        els.startScreen.classList.add('hidden');
+        els.quizSection.classList.remove('hidden');
+        els.headerControls.classList.remove('hidden');
+
+        renderDashboard();
+        if (sessionState.progressOpen) {
+          renderProgressPanel();
+        }
+        loadNextQuestion();
+      }
+
+      function showStartScreen() {
+        clearAutoAdvanceTimer();
+        stopPointTimer();
+        hideBadgeSplash();
+        sessionState.paused = false;
+
+        els.quizSection.classList.add('hidden');
+        els.headerControls.classList.add('hidden');
+        els.startScreen.classList.remove('hidden');
+        renderStartScreen();
+      }
+
+      function togglePause(forceState) {
+        const nextPaused = typeof forceState === 'boolean' ? forceState : !sessionState.paused;
+        sessionState.paused = nextPaused;
+
+        if (nextPaused) {
+          clearAutoAdvanceTimer();
+          stopPointTimer();
+          els.pauseOverlay.classList.remove('hidden');
+          els.btnPauseResume.textContent = 'Resume';
+        } else {
+          els.pauseOverlay.classList.add('hidden');
+          els.btnPauseResume.textContent = 'Pause';
+          if (sessionState.answered && sessionState.currentQuestion) {
+            const chosen = sessionState.currentQuestion.options[sessionState.selectedOptionIndex];
+            if (chosen && chosen.isCorrect) {
+              loadNextQuestion();
+            }
+          } else if (!sessionState.answered) {
+            startPointTimer(false);
+          }
+        }
+      }
+
+      function toggleProgressPanel(forceOpen) {
+        const nextOpen = typeof forceOpen === 'boolean' ? forceOpen : !sessionState.progressOpen;
+        sessionState.progressOpen = nextOpen;
+        els.progressPanel.classList.toggle('hidden', !nextOpen);
+        els.btnToggleProgress.setAttribute('aria-expanded', String(nextOpen));
+        els.btnToggleProgress.textContent = nextOpen ? 'Hide Progress' : 'View Progress';
+
+        if (nextOpen) {
+          renderProgressPanel();
+        }
+      }
+
+      function openResetModal() {
+        const label = store.selectedList === 'full' ? 'Full List (21 Ions)' : 'Essentials (13 Ions)';
+        els.resetModalBody.textContent = `This will erase all saved mastery data, statistics, and adaptive level progress for ${label} and start over at Level 1.`;
+        els.resetModal.classList.remove('hidden');
+        els.btnCancelReset.focus();
+      }
+
+      function closeResetModal() {
+        els.resetModal.classList.add('hidden');
+      }
+
+      function confirmResetCurrentList() {
+        clearAutoAdvanceTimer();
+        store.modes[store.selectedList] = createDefaultModeState();
+        saveStore();
+        closeResetModal();
+
+        if (sessionState.paused) {
+          togglePause(false);
+        }
+        renderDashboard();
+        if (sessionState.progressOpen) {
+          renderProgressPanel();
+        }
+        loadNextQuestion();
+      }
+
+      /* ========================================================================
+         10. EVENT LISTENERS & KEYBOARD ACCESSIBILITY
+         ======================================================================== */
+      // Start screen list selection
+      [els.cardEssentials, els.cardFull].forEach(card => {
+        card.addEventListener('click', () => {
+          const chosenList = card.getAttribute('data-list');
+          if (chosenList === 'essentials' || chosenList === 'full') {
+            store.selectedList = chosenList;
+            saveStore();
+            renderStartScreen();
+          }
+        });
+      });
+
+      // Start screen direction selection
+      document.querySelectorAll('.dir-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const chosenDir = btn.getAttribute('data-dir');
+          if (chosenDir === 'mixed' || chosenDir === 'nameToFormula' || chosenDir === 'formulaToName') {
+            store.selectedDirection = chosenDir;
+            saveStore();
+            renderStartScreen();
+          }
+        });
+      });
+
+      // Start practice button
+      els.btnStartQuiz.addEventListener('click', () => {
+        enterQuizView();
+      });
+
+      // Header & quiz controls
+      els.btnToggleProgress.addEventListener('click', () => toggleProgressPanel());
+      els.btnPauseResume.addEventListener('click', () => togglePause());
+      els.btnResumeOverlay.addEventListener('click', () => togglePause(false));
+      els.btnHomeScreen.addEventListener('click', () => showStartScreen());
+
+      // Clicking badge counter or trophy shelves opens My Progress and scrolls to Badges
+      function jumpToBadgesSection() {
+        if (!sessionState.progressOpen) {
+          toggleProgressPanel(true);
+        }
+        els.badgesSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+      els.statBadgesBtn.addEventListener('click', jumpToBadgesSection);
+      els.badgesLeftShelf.addEventListener('click', jumpToBadgesSection);
+      els.badgesRightShelf.addEventListener('click', jumpToBadgesSection);
+      els.badgeSplashOverlay.addEventListener('click', hideBadgeSplash);
+
+      // Inline mode switchers (preserves saved progress per list)
+      els.activeListSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val === 'essentials' || val === 'full') {
+          store.selectedList = val;
+          saveStore();
+          renderDashboard();
+          if (sessionState.progressOpen) {
+            renderProgressPanel();
+          }
+          loadNextQuestion();
+        }
+      });
+
+      els.activeDirSelect.addEventListener('change', (e) => {
+        const val = e.target.value;
+        if (val === 'mixed' || val === 'nameToFormula' || val === 'formulaToName') {
+          store.selectedDirection = val;
+          saveStore();
+          renderDashboard();
+          if (sessionState.progressOpen) {
+            renderProgressPanel();
+          }
+          loadNextQuestion();
+        }
+      });
+
+      // Reset confirmation modal controls
+      els.btnOpenReset.addEventListener('click', openResetModal);
+      els.btnResetInPanel.addEventListener('click', openResetModal);
+      els.btnCancelReset.addEventListener('click', closeResetModal);
+      els.btnConfirmReset.addEventListener('click', confirmResetCurrentList);
+      els.resetModal.addEventListener('click', (e) => {
+        if (e.target === els.resetModal) {
+          closeResetModal();
+        }
+      });
+
+      // Desktop keyboard shortcuts (1-8 / A-H to answer, Enter / Space to advance, Escape to close modal)
+      document.addEventListener('keydown', (e) => {
+        if (!els.badgeSplashOverlay.classList.contains('hidden')) {
+          if (e.key === 'Escape' || e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            hideBadgeSplash();
+          }
+          return;
+        }
+
+        if (!els.resetModal.classList.contains('hidden')) {
+          if (e.key === 'Escape') {
+            e.preventDefault();
+            closeResetModal();
+          }
+          return;
+        }
+
+        if (els.quizSection.classList.contains('hidden') || sessionState.paused) {
+          return;
+        }
+
+        if (e.target && (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT')) {
+          return;
+        }
+
+        const q = sessionState.currentQuestion;
+        if (!q) return;
+
+        if (!sessionState.answered) {
+          const keyUpper = e.key.toUpperCase();
+          let index = -1;
+          if (keyUpper >= '1' && keyUpper <= '8') {
+            index = parseInt(keyUpper, 10) - 1;
+          } else {
+            index = OPTION_LETTERS.indexOf(keyUpper);
+          }
+
+          if (index >= 0 && index < q.options.length) {
+            e.preventDefault();
+            handleAnswer(index);
+          }
+        } else if (e.key === 'Enter' || e.key === ' ') {
+          const nextBtn = document.getElementById('btnNextQuestion');
+          if (nextBtn) {
+            e.preventDefault();
+            loadNextQuestion();
+          }
+        }
+      });
+
+      // Initialize starting screen on load
+      renderStartScreen();
+    })();
+  </script>
+</body>
+</html>
